@@ -106,14 +106,14 @@ int main()
             -0.3, 0.24, 0.0,
             0.0, 0.76, 0.0,
             0.3, 0.24, 0.0,
-//            //second
-//            0.3, -0.8, 0.0,
-//            0.6, -0.28, 0.0,
-//            0.9, -0.8, 0.0,
-//            //last
-//            -0.6, -0.28, 0.0,
-//            -0.9, -0.8, 0.0,
-//            -0.3, -0.8, 0.0,
+            //second
+            0.6, -0.28, 0.0,
+            0.3, -0.8, 0.0,
+            0.9, -0.8, 0.0,
+            //last
+            -0.3, -0.8, 0.0,
+            -0.6, -0.28, 0.0,
+            -0.9, -0.8, 0.0,
     };
 
     std::vector<float> vertices;
@@ -124,7 +124,11 @@ int main()
 
     unsigned int indices[] = {  // note that we start from 0!
             0,1,3,
-            1,2,3
+            1,2,3,
+            0,4,5,
+            4,6,5,
+            0,7,8,
+            7,8,9
     };
 
 //    std::vector<float> indices;
@@ -142,7 +146,7 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(indices), &indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
