@@ -175,7 +175,7 @@ int main()
 //        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 //        glDrawArrays(GL_TRIANGLE_STRIP, 3, 4);
 //        glDrawArrays(GL_TRIANGLE_FAN, 7, 4);
-        glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -188,6 +188,7 @@ int main()
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
