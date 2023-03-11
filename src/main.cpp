@@ -122,15 +122,15 @@ int main()
         vertices.push_back(coord);
     }
 
-    unsigned int indices_a[] = {  // note that we start from 0!
+    unsigned int indices[] = {  // note that we start from 0!
             0,1,3,
             1,2,3
     };
 
-    std::vector<float> indices;
-    for (auto coord : indices_a) {
-        indices.push_back(coord);
-    }
+//    std::vector<float> indices;
+//    for (auto coord : indices_a) {
+//        indices.push_back(coord);
+//    }
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -188,6 +188,7 @@ int main()
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
