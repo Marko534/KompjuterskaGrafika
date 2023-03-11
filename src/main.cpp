@@ -1,14 +1,16 @@
+#define _USE_MATH_DEFINES
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 800;
 
 static const char *vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
@@ -99,16 +101,22 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices_a[] = {
-        -0.5f, -0.5f, 0.0f, // left
-         0.5f, -0.5f, 0.0f, // right
-         0.0f,  0.5f, 0.0f  // top
-    };
 
     std::vector<float> vertices;
 
-    for (auto coord : vertices_a) {
-        vertices.push_back(coord);
+    vertices.push_back(0.0);
+    vertices.push_back(0.0);
+    vertices.push_back(0.0);
+    //Prasaj zosto posle 85 se odkazuva
+    int numberOfVertices = 6;
+    float radius = 0.9;
+    float angle = 0;
+
+    for (int i = 0; i <= numberOfVertices; i++) {
+        vertices.push_back(sin(angle)*radius);
+        vertices.push_back(cos(angle)*radius);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/numberOfVertices;
     }
 
     unsigned int VBO, VAO;
@@ -151,7 +159,7 @@ int main()
         // draw our first triangle
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices+2);
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
