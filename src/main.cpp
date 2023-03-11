@@ -136,7 +136,9 @@ int main() {
             0.0, 0.0, 0.0,
             0.8, -0.4, 0.0,
             0.8, 0.4, 0.0,
-
+            0.4, 0.8, 0.0,
+            -0.4, 0.4, 0.0,
+            -.8, 0.0, 0.0,
     };
 
     std::vector<float> vertices;
@@ -187,7 +189,11 @@ int main() {
 
         // We replace glDrawArrays with glDrawElements
 
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 12);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 6);
+
+        glUseProgram(shaderProgramRoof);
+        glDrawArrays(GL_TRIANGLE_FAN, 5, 5);
+
         //glDrawElements(GL_TRIANGLE_STRIP, 12, GL_UNSIGNED_INT, nullptr);
         // glBindVertexArray(0); // no need to unbind it every time
 
