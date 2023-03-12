@@ -108,7 +108,7 @@ int main()
     vertices.push_back(0.0);
     vertices.push_back(0.0);
     //Prasaj zosto posle 85 se odkazuva
-    int numberOfVertices = 80;
+    int numberOfVertices = 1000;
     float radius = 0.9;
     float angle = 0;
 
@@ -126,7 +126,7 @@ int main()
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
     //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_a), vertices_a, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
