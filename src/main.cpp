@@ -22,7 +22,7 @@ static const char *fragmentShaderSource = "#version 330 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
+    "   FragColor = vec4(0.0,0.0,0.0, 1.0f);\n"
     "}\n\0";
 
 int main()
@@ -108,13 +108,51 @@ int main()
     vertices.push_back(0.0);
     vertices.push_back(0.0);
     //Prasaj zosto posle 85 se odkazuva
-    int numberOfVertices = 80;
-    float radius = 0.9;
+    int numberOfVertices = 33;
+    float radiusSmall = 0.17;
+    float radiusMedium = 0.25;
+    float radiusBig= 0.84;
     float angle = 0;
 
     for (int i = 0; i <= numberOfVertices; i++) {
-        vertices.push_back(sin(angle)*radius);
-        vertices.push_back(cos(angle)*radius);
+        vertices.push_back(sin(angle)*radiusSmall);
+        vertices.push_back(cos(angle)*radiusSmall);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/numberOfVertices;
+    }
+
+    angle = 0;
+
+    for (int i = 0; i <= numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle)*radiusMedium);
+        vertices.push_back(sin(angle)*radiusMedium);
+        vertices.push_back(0.0);
+        vertices.push_back(cos(angle)*radiusBig);
+        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/numberOfVertices;
+    }
+
+    angle = M_PI*2/3;
+
+    for (int i = 0; i <= numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle)*radiusMedium);
+        vertices.push_back(sin(angle)*radiusMedium);
+        vertices.push_back(0.0);
+        vertices.push_back(cos(angle)*radiusBig);
+        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/numberOfVertices;
+    }
+
+    angle = M_PI*4/3;
+
+    for (int i = 0; i <= numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle)*radiusMedium);
+        vertices.push_back(sin(angle)*radiusMedium);
+        vertices.push_back(0.0);
+        vertices.push_back(cos(angle)*radiusBig);
+        vertices.push_back(sin(angle)*radiusBig);
         vertices.push_back(0.0);
         angle+= 2.0*M_PI/numberOfVertices;
     }
@@ -153,13 +191,17 @@ int main()
 
         // render
         // ------
-        glClearColor(0.0,0.0,0.0, 1.0f);
+        glClearColor(0.914,0.753,0.137, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw our first triangle
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices+2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2, numberOfVertices/3+1);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+numberOfVertices/3+1, numberOfVertices/3+1);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+2*(numberOfVertices/3+1), numberOfVertices/3+1);
+
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
