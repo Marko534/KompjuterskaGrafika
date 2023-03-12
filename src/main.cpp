@@ -101,19 +101,28 @@ int main()
     // ------------------------------------------------------------------
     float vertices_a[] = {
             //center
-            0.0, -0.28, 0.0,
-            //first
-            -0.3, 0.24, 0.0,
-            0.0, 0.76, 0.0,
-            0.3, 0.24, 0.0,
-            //second
-            0.6, -0.28, 0.0,
-            0.3, -0.8, 0.0,
-            0.9, -0.8, 0.0,
-            //last
-            -0.3, -0.8, 0.0,
-            -0.6, -0.28, 0.0,
-            -0.9, -0.8, 0.0,
+            0.0, 0.0, 0.0,
+            //top
+            0.29,0.5, 0.0,
+            0.0, 1.0, 0.0,
+            -0.29,0.5, 0.0,
+            //left
+            -0.5,0.29, 0.0,
+            -1.0,0.0, 0.0,
+            -0.5,-0.29, 0.0,
+            //bottom
+            -0.29,-0.5, 0.0,
+            0.0, -1.0, 0.0,
+            0.29,-0.5, 0.0,
+            //right
+            0.5,-0.29, 0.0,
+            1.0,0.0, 0.0,
+            0.5,0.29, 0.0,
+            //corners
+            -0.79, 0.79, 0.0,
+            -0.79, -0.79, 0.0,
+            0.79, -0.79, 0.0,
+            0.79, 0.79, 0.0,
     };
 
     std::vector<float> vertices;
@@ -123,12 +132,23 @@ int main()
     }
 
     unsigned int indices[] = {  // note that we start from 0!
-            0,1,3,
-            1,2,3,
-            0,4,5,
+            //top
+             0,1,3,
+            3,1,2,
+            //left
+            0, 4,6,
             4,6,5,
-            0,7,8,
-            7,8,9
+            //bottom
+            0, 7 , 9,
+            7,8,9,
+            //right
+            0,10,12,
+            10,11,12,
+            //corners
+            3,13,4,
+            6,14,7,
+            9,15,10,
+            12, 16, 1
     };
 
 //    std::vector<float> indices;
@@ -179,7 +199,8 @@ int main()
 //        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 //        glDrawArrays(GL_TRIANGLE_STRIP, 3, 4);
 //        glDrawArrays(GL_TRIANGLE_FAN, 7, 4);
-        glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
+        //glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
