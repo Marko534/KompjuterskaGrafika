@@ -107,8 +107,8 @@ int main()
     vertices.push_back(0.0);
     vertices.push_back(0.0);
     vertices.push_back(0.0);
-    //Prasaj zosto posle 85 se odkazuva
-    int numberOfVertices = 33;
+    //Da e delivo so 6 e preporaclivo
+    int numberOfVertices = 996;
     float radiusSmall = 0.17;
     float radiusMedium = 0.25;
     float radiusBig= 0.84;
@@ -132,7 +132,6 @@ int main()
         vertices.push_back(0.0);
         angle+= 2.0*M_PI/numberOfVertices;
     }
-
     angle = M_PI*2/3;
 
     for (int i = 0; i <= numberOfVertices/6; i++) {
@@ -157,6 +156,8 @@ int main()
         angle+= 2.0*M_PI/numberOfVertices;
     }
 
+    printf("%d", vertices.size());
+
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -164,7 +165,8 @@ int main()
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
+    //Ovde mora vo sizeof sho da e pomalo
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
     //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_a), vertices_a, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
@@ -198,9 +200,9 @@ int main()
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices+2);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2, numberOfVertices/3+1);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+numberOfVertices/3+1, numberOfVertices/3+1);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+2*(numberOfVertices/3+1), numberOfVertices/3+1);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2, numberOfVertices/3+2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+numberOfVertices/3+2, numberOfVertices/3+2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+2*(numberOfVertices/3+2), numberOfVertices/3+2);
 
         // glBindVertexArray(0); // no need to unbind it every time
 
