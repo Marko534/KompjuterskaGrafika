@@ -20,7 +20,7 @@ static const char *fragmentShaderSource = "#version 330 core\n"
                                           "out vec4 FragColor;\n"
                                           "void main()\n"
                                           "{\n"
-                                          "   FragColor = vec4(0.902,0.0,0.071, 1.0f);\n"
+                                          "   FragColor = vec4(1.,0.502,0.2, 1.0f);\n"
                                           "}\n\0";
 
 int main()
@@ -170,7 +170,7 @@ int main()
 
         // render
         // ------
-        glClearColor(1.0,1.0,1.0, 1.0f);
+        glClearColor(0.2,0.298,0.298, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw our first triangle
