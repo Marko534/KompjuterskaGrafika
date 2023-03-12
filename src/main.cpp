@@ -145,10 +145,14 @@ int main()
             0,10,12,
             10,11,12,
             //corners
-            3,13,4,
-            6,14,7,
-            9,15,10,
-            12, 16, 1
+            3,13,
+            13,4,
+            6,14,
+            14,7,
+            9,15,
+            15,10,
+            12, 16,
+            16,1
     };
 
 //    std::vector<float> indices;
@@ -199,8 +203,8 @@ int main()
 //        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 //        glDrawArrays(GL_TRIANGLE_STRIP, 3, 4);
 //        glDrawArrays(GL_TRIANGLE_FAN, 7, 4);
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
-        //glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_LINES, 16, GL_UNSIGNED_INT, (void*) (24*sizeof (int)));
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
