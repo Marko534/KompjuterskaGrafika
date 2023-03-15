@@ -1,11 +1,13 @@
 #define _USE_MATH_DEFINES
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <iostream>
 #include <cmath>
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
 void processInput(GLFWwindow *window);
 
 // settings
@@ -13,20 +15,19 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
 
 static const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
+                                        "layout (location = 0) in vec3 aPos;\n"
+                                        "void main()\n"
+                                        "{\n"
+                                        "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                                        "}\0";
 static const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(0.0,0.0,0.0, 1.0f);\n"
-    "}\n\0";
+                                          "out vec4 FragColor;\n"
+                                          "void main()\n"
+                                          "{\n"
+                                          "   FragColor = vec4(0.0,0.0,0.0, 1.0f);\n"
+                                          "}\n\0";
 
-int main()
-{
+int main() {
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -40,9 +41,8 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
-    if (window == nullptr)
-    {
+    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
+    if (window == nullptr) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
@@ -52,8 +52,7 @@ int main()
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
-    if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress)))
-    {
+    if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress))) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
@@ -69,8 +68,7 @@ int main()
     int success;
     char infoLog[512];
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
@@ -80,8 +78,7 @@ int main()
     glCompileShader(fragmentShader);
     // check for shader compile errors
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
@@ -111,49 +108,49 @@ int main()
     int numberOfVertices = 996;
     float radiusSmall = 0.17;
     float radiusMedium = 0.25;
-    float radiusBig= 0.84;
+    float radiusBig = 0.84;
     float angle = 0;
 
     for (int i = 0; i <= numberOfVertices; i++) {
-        vertices.push_back(sin(angle)*radiusSmall);
-        vertices.push_back(cos(angle)*radiusSmall);
+        vertices.push_back(sin(angle) * radiusSmall);
+        vertices.push_back(cos(angle) * radiusSmall);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
     }
 
     angle = 0;
 
-    for (int i = 0; i <= numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle)*radiusMedium);
-        vertices.push_back(sin(angle)*radiusMedium);
+    for (int i = 0; i <= numberOfVertices / 6; i++) {
+        vertices.push_back(cos(angle) * radiusMedium);
+        vertices.push_back(sin(angle) * radiusMedium);
         vertices.push_back(0.0);
-        vertices.push_back(cos(angle)*radiusBig);
-        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(cos(angle) * radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
     }
-    angle = M_PI*2/3;
+    angle = M_PI * 2 / 3;
 
-    for (int i = 0; i <= numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle)*radiusMedium);
-        vertices.push_back(sin(angle)*radiusMedium);
+    for (int i = 0; i <= numberOfVertices / 6; i++) {
+        vertices.push_back(cos(angle) * radiusMedium);
+        vertices.push_back(sin(angle) * radiusMedium);
         vertices.push_back(0.0);
-        vertices.push_back(cos(angle)*radiusBig);
-        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(cos(angle) * radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
     }
 
-    angle = M_PI*4/3;
+    angle = M_PI * 4 / 3;
 
-    for (int i = 0; i <= numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle)*radiusMedium);
-        vertices.push_back(sin(angle)*radiusMedium);
+    for (int i = 0; i <= numberOfVertices / 6; i++) {
+        vertices.push_back(cos(angle) * radiusMedium);
+        vertices.push_back(sin(angle) * radiusMedium);
         vertices.push_back(0.0);
-        vertices.push_back(cos(angle)*radiusBig);
-        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(cos(angle) * radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
     }
 
     printf("%d", vertices.size());
@@ -185,24 +182,25 @@ int main()
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // input
         // -----
         processInput(window);
 
         // render
         // ------
-        glClearColor(0.914,0.753,0.137, 1.0f);
+        glClearColor(0.914, 0.753, 0.137, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw our first triangle
         glUseProgram(shaderProgram);
-        glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices+2);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2, numberOfVertices/3+2);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+numberOfVertices/3+2, numberOfVertices/3+2);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices+2+2*(numberOfVertices/3+2), numberOfVertices/3+2);
+        glBindVertexArray(
+                VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices + 2, numberOfVertices / 3 + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices + 2 + numberOfVertices / 3 + 2, numberOfVertices / 3 + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices + 2 + 2 * (numberOfVertices / 3 + 2),
+                     numberOfVertices / 3 + 2);
 
         // glBindVertexArray(0); // no need to unbind it every time
 
@@ -225,8 +223,7 @@ int main()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow *window)
-{
+void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
@@ -240,8 +237,7 @@ void processInput(GLFWwindow *window)
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
+void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
