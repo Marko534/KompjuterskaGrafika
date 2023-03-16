@@ -1,11 +1,13 @@
 #define _USE_MATH_DEFINES
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <iostream>
 #include <cmath>
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
 void processInput(GLFWwindow *window);
 
 // settings
@@ -25,8 +27,7 @@ static const char *fragmentShaderSource = "#version 330 core\n"
                                           "   FragColor = vec4(1.,0.502,0.2, 1.0f);\n"
                                           "}\n\0";
 
-int main()
-{
+int main() {
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -40,9 +41,8 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
-    if (window == nullptr)
-    {
+    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
+    if (window == nullptr) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
@@ -52,8 +52,7 @@ int main()
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
-    if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress)))
-    {
+    if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress))) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
@@ -69,8 +68,7 @@ int main()
     int success;
     char infoLog[512];
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
@@ -80,8 +78,7 @@ int main()
     glCompileShader(fragmentShader);
     // check for shader compile errors
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
+    if (!success) {
         glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
@@ -103,48 +100,56 @@ int main()
 
     int numberOfSegments = 4;
     float radiusBig = 1;
-    float radiusSmall = 1/(radiusBig*sin(M_PI/3)*2);
+    float radiusSmall = 1 / (radiusBig * sin(M_PI / 3) * 2);
     float angle = 0;
 
     vertices.push_back(0.0);
     vertices.push_back(0.0);
     vertices.push_back(0.0);
 
-    for (int i = 0; i <numberOfSegments; i++) {
+    for (int i = 0; i < numberOfSegments; i++) {
         //first vertex
-        vertices.push_back(cos(angle)*radiusBig);
-        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(cos(angle) * radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/(numberOfSegments*3);
+        angle += 2.0 * M_PI / (numberOfSegments * 3);
 
         //second vertex
-        vertices.push_back(cos(angle)*radiusSmall);
-        vertices.push_back(sin(angle)*radiusSmall);
+        vertices.push_back(cos(angle) * radiusSmall);
+        vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/(numberOfSegments*6);
+        angle += 2.0 * M_PI / (numberOfSegments * 6);
 
         //third vertex
-        vertices.push_back(cos(angle)*radiusBig);
-        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(cos(angle) * radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/(numberOfSegments*6);
+        angle += 2.0 * M_PI / (numberOfSegments * 6);
 
         //forth vertex
-        vertices.push_back(cos(angle)*radiusSmall);
-        vertices.push_back(sin(angle)*radiusSmall);
+        vertices.push_back(cos(angle) * radiusSmall);
+        vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/(numberOfSegments*3);
+        angle += 2.0 * M_PI / (numberOfSegments * 3);
     }
 
-    unsigned int indices[] = {
-            0,1,3,
-            3,1,2
-    };
 
-//    std::vector<float> indices;
-//    for (auto coord : indices_a) {
-//        indices.push_back(coord);
-//    }
+    std::vector<int> indices;
+    for (int i = 0; i < numberOfSegments; i++) {
+        indices.push_back(0);
+        indices.push_back(4 * i + 1);
+        indices.push_back(4 * i + 2);
+
+        indices.push_back(0);
+        indices.push_back(4 * i + 4);
+        indices.push_back(4 * i + 5);
+    }
+
+    //to conect with the first vertex
+    indices.pop_back();
+    indices.push_back(1);
+
+
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -156,7 +161,7 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(indices[0]), &indices[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
@@ -172,24 +177,24 @@ int main()
     glBindVertexArray(0);
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // input
         // -----
         processInput(window);
 
         // render
         // ------
-        glClearColor(0.2,0.298,0.298, 1.0f);
+        glClearColor(0.2, 0.298, 0.298, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw our first triangle
         glUseProgram(shaderProgram);
-        glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 18);
+        glBindVertexArray(
+                VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+        //  glDrawArrays(GL_TRIANGLE_FAN, 0, 18);
 //
-        //glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
-      //  glDrawElements(GL_LINES, 16, GL_UNSIGNED_INT, (void*) (24*sizeof (int)));
+        glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
+        //glDrawElements(GL_LINES, 16, GL_UNSIGNED_INT, (void *) (24 * sizeof(int)));
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -212,8 +217,7 @@ int main()
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow *window)
-{
+void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
@@ -224,10 +228,10 @@ void processInput(GLFWwindow *window)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     //glfwSetWindowShouldClose(window, true);
 }
+
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
+void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
