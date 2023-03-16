@@ -112,8 +112,8 @@ int main() {
     float angle = 0;
 
     for (int i = 0; i <= numberOfVertices; i++) {
-        vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(cos(angle) * radiusSmall);
+        vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(0.0);
         angle += 2.0 * M_PI / numberOfVertices;
     }
