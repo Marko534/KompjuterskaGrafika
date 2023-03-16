@@ -1,7 +1,10 @@
+#define _USE_MATH_DEFINES
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <iostream>
+#include <cmath>
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -99,42 +102,57 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices_a[] = {
-            //center
-            0.0, -0.28, 0.0,
-            //first
-            -0.3, 0.24, 0.0,
-            0.0, 0.76, 0.0,
-            0.3, 0.24, 0.0,
-            //second
-            0.6, -0.28, 0.0,
-            0.3, -0.8, 0.0,
-            0.9, -0.8, 0.0,
-            //last
-            -0.3, -0.8, 0.0,
-            -0.6, -0.28, 0.0,
-            -0.9, -0.8, 0.0,
-    };
-
     std::vector<float> vertices;
 
-    for (auto coord : vertices_a) {
-        vertices.push_back(coord);
+    int numberOfVertices = 6;
+    float radiusSmall = 0.6;
+    float offset = -(0.78 - radiusSmall * sin(M_PI/3));
+    float angle = M_PI/3;
+
+    vertices.push_back(0.0);
+    vertices.push_back(offset);
+    vertices.push_back(0.0);
+
+    for (int i = 0; i < numberOfVertices; i++) {
+        vertices.push_back(cos(angle)*radiusSmall);
+        vertices.push_back(sin(angle)*radiusSmall+ offset);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/numberOfVertices;
     }
 
-    unsigned int indices[] = {  // note that we start from 0!
-            0,1,3,
-            1,2,3,
-            0,4,5,
-            4,6,5,
-            0,7,8,
-            7,8,9
-    };
+    float radiusBig = 2*radiusSmall* sin(M_PI/3);
+    angle = M_PI/2;
 
-//    std::vector<float> indices;
-//    for (auto coord : indices_a) {
-//        indices.push_back(coord);
-//    }
+    for (int i = 0; i < numberOfVertices/2; i++) {
+        vertices.push_back(cos(angle)*radiusBig);
+        vertices.push_back(sin(angle)*radiusBig+offset);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/(numberOfVertices/2);
+    }
+
+//    unsigned int indicesB[] = {  // note that we start from 0!
+//            0,1,2,
+//            0,3,4,
+//            0,5,6,
+//            //high
+//            1,7,2,
+//            3,8,4,
+//            5,9,6
+//    };
+
+    std::vector<int> indices;
+
+    for (int i =1; i<6; i +=2) {
+        indices.push_back(0);
+        indices.push_back(i);
+        indices.push_back(i+1);
+    }
+
+    for (int i =1; i<6; i +=2) {
+        indices.push_back(i);
+        indices.push_back(i/2+7);
+        indices.push_back(i+1);
+    }
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -146,7 +164,7 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof (indices[0]), &indices[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
