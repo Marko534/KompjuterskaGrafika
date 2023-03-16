@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
@@ -98,74 +99,46 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-//    float vertices_a[] = {
-//            //center
-//            0.0, 0.0, 0.0,
-//            //top
-//            0.29,0.5, 0.0,
-//            0.0, 1.0, 0.0,
-//            -0.29,0.5, 0.0,
-//            //left
-//            -0.5,0.29, 0.0,
-//            -1.0,0.0, 0.0,
-//            -0.5,-0.29, 0.0,
-//            //bottom
-//            -0.29,-0.5, 0.0,
-//            0.0, -1.0, 0.0,
-//            0.29,-0.5, 0.0,
-//            //right
-//            0.5,-0.29, 0.0,
-//            1.0,0.0, 0.0,
-//            0.5,0.29, 0.0,
-//            //corners
-//            -0.79, 0.79, 0.0,
-//            -0.79, -0.79, 0.0,
-//            0.79, -0.79, 0.0,
-//            0.79, 0.79, 0.0,
-//    };
-
     std::vector<float> vertices;
 
-    int numberOfVertices = 6;
-    float radiusSmall = 0.6;
-    float offset = -(0.78 - radiusSmall * sin(M_PI/3));
-    float angle = M_PI/3;
+    int numberOfSegments = 4;
+    float radiusBig = 1;
+    float radiusSmall = 1/(radiusBig*sin(M_PI/3)*2);
+    float angle = 0;
 
     vertices.push_back(0.0);
-    vertices.push_back(offset);
+    vertices.push_back(0.0);
     vertices.push_back(0.0);
 
-    for (int i = 0; i < numberOfVertices; i++) {
-        vertices.push_back(cos(angle)*radiusSmall);
-        vertices.push_back(sin(angle)*radiusSmall+ offset);
+    for (int i = 0; i <numberOfSegments; i++) {
+        //first vertex
+        vertices.push_back(cos(angle)*radiusBig);
+        vertices.push_back(sin(angle)*radiusBig);
         vertices.push_back(0.0);
-        angle+= 2.0*M_PI/numberOfVertices;
+        angle+= 2.0*M_PI/(numberOfSegments*3);
+
+        //second vertex
+        vertices.push_back(cos(angle)*radiusSmall);
+        vertices.push_back(sin(angle)*radiusSmall);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/(numberOfSegments*6);
+
+        //third vertex
+        vertices.push_back(cos(angle)*radiusBig);
+        vertices.push_back(sin(angle)*radiusBig);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/(numberOfSegments*6);
+
+        //forth vertex
+        vertices.push_back(cos(angle)*radiusSmall);
+        vertices.push_back(sin(angle)*radiusSmall);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/(numberOfSegments*3);
     }
 
-    unsigned int indices[] = {  // note that we start from 0!
-            //top
-             0,1,3,
-            3,1,2,
-            //left
-            0, 4,6,
-            4,6,5,
-            //bottom
-            0, 7 , 9,
-            7,8,9,
-            //right
-            0,10,12,
-            10,11,12,
-            //corners
-            3,13,
-            13,4,
-            6,14,
-            14,7,
-            9,15,
-            15,10,
-            12, 16,
-            16,1
+    unsigned int indices[] = {
+            0,1,3,
+            3,1,2
     };
 
 //    std::vector<float> indices;
@@ -213,11 +186,10 @@ int main()
         // draw our first triangle
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-//        glDrawArrays(GL_TRIANGLE_STRIP, 3, 4);
-//        glDrawArrays(GL_TRIANGLE_FAN, 7, 4);
-        glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
-        glDrawElements(GL_LINES, 16, GL_UNSIGNED_INT, (void*) (24*sizeof (int)));
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 18);
+//
+        //glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
+      //  glDrawElements(GL_LINES, 16, GL_UNSIGNED_INT, (void*) (24*sizeof (int)));
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
