@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -99,36 +100,48 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float vertices_a[] = {
-            //center
-            0.0, 0.0, 0.0,
-            //top
-            0.29,0.5, 0.0,
-            0.0, 1.0, 0.0,
-            -0.29,0.5, 0.0,
-            //left
-            -0.5,0.29, 0.0,
-            -1.0,0.0, 0.0,
-            -0.5,-0.29, 0.0,
-            //bottom
-            -0.29,-0.5, 0.0,
-            0.0, -1.0, 0.0,
-            0.29,-0.5, 0.0,
-            //right
-            0.5,-0.29, 0.0,
-            1.0,0.0, 0.0,
-            0.5,0.29, 0.0,
-            //corners
-            -0.79, 0.79, 0.0,
-            -0.79, -0.79, 0.0,
-            0.79, -0.79, 0.0,
-            0.79, 0.79, 0.0,
-    };
+//    float vertices_a[] = {
+//            //center
+//            0.0, 0.0, 0.0,
+//            //top
+//            0.29,0.5, 0.0,
+//            0.0, 1.0, 0.0,
+//            -0.29,0.5, 0.0,
+//            //left
+//            -0.5,0.29, 0.0,
+//            -1.0,0.0, 0.0,
+//            -0.5,-0.29, 0.0,
+//            //bottom
+//            -0.29,-0.5, 0.0,
+//            0.0, -1.0, 0.0,
+//            0.29,-0.5, 0.0,
+//            //right
+//            0.5,-0.29, 0.0,
+//            1.0,0.0, 0.0,
+//            0.5,0.29, 0.0,
+//            //corners
+//            -0.79, 0.79, 0.0,
+//            -0.79, -0.79, 0.0,
+//            0.79, -0.79, 0.0,
+//            0.79, 0.79, 0.0,
+//    };
 
     std::vector<float> vertices;
 
-    for (auto coord : vertices_a) {
-        vertices.push_back(coord);
+    int numberOfVertices = 6;
+    float radiusSmall = 0.6;
+    float offset = -(0.78 - radiusSmall * sin(M_PI/3));
+    float angle = M_PI/3;
+
+    vertices.push_back(0.0);
+    vertices.push_back(offset);
+    vertices.push_back(0.0);
+
+    for (int i = 0; i < numberOfVertices; i++) {
+        vertices.push_back(cos(angle)*radiusSmall);
+        vertices.push_back(sin(angle)*radiusSmall+ offset);
+        vertices.push_back(0.0);
+        angle+= 2.0*M_PI/numberOfVertices;
     }
 
     unsigned int indices[] = {  // note that we start from 0!
