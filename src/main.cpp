@@ -149,6 +149,13 @@ int main() {
     indices.pop_back();
     indices.push_back(1);
 
+    for(int i = 0; i< numberOfSegments;i++){
+        indices.push_back(4*i+2);
+        indices.push_back(4*i+3);
+
+        indices.push_back(4*i+3);
+        indices.push_back(4*i+4);
+    }
 
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
@@ -194,7 +201,7 @@ int main() {
         //  glDrawArrays(GL_TRIANGLE_FAN, 0, 18);
 //
         glDrawElements(GL_TRIANGLES, 24, GL_UNSIGNED_INT, nullptr);
-        //glDrawElements(GL_LINES, 16, GL_UNSIGNED_INT, (void *) (24 * sizeof(int)));
+        glDrawElements(GL_LINES, 16, GL_UNSIGNED_INT, (void *) (24 * sizeof(int)));
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
