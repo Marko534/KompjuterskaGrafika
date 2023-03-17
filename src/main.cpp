@@ -119,38 +119,17 @@ int main() {
     }
 
     angle = 0;
-
-    for (int i = 0; i <= numberOfVertices / 6; i++) {
-        vertices.push_back(cos(angle) * radiusMedium);
-        vertices.push_back(sin(angle) * radiusMedium);
-        vertices.push_back(0.0);
-        vertices.push_back(cos(angle) * radiusBig);
-        vertices.push_back(sin(angle) * radiusBig);
-        vertices.push_back(0.0);
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-    angle = M_PI * 2 / 3;
-
-    for (int i = 0; i <= numberOfVertices / 6; i++) {
-        vertices.push_back(cos(angle) * radiusMedium);
-        vertices.push_back(sin(angle) * radiusMedium);
-        vertices.push_back(0.0);
-        vertices.push_back(cos(angle) * radiusBig);
-        vertices.push_back(sin(angle) * radiusBig);
-        vertices.push_back(0.0);
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    angle = M_PI * 4 / 3;
-
-    for (int i = 0; i <= numberOfVertices / 6; i++) {
-        vertices.push_back(cos(angle) * radiusMedium);
-        vertices.push_back(sin(angle) * radiusMedium);
-        vertices.push_back(0.0);
-        vertices.push_back(cos(angle) * radiusBig);
-        vertices.push_back(sin(angle) * radiusBig);
-        vertices.push_back(0.0);
-        angle += 2.0 * M_PI / numberOfVertices;
+    for(int j = 0; j<3; j++) {
+        for (int i = 0; i <= numberOfVertices / 6; i++) {
+            vertices.push_back(cos(angle) * radiusMedium);
+            vertices.push_back(sin(angle) * radiusMedium);
+            vertices.push_back(0.0);
+            vertices.push_back(cos(angle) * radiusBig);
+            vertices.push_back(sin(angle) * radiusBig);
+            vertices.push_back(0.0);
+            angle += 2.0 * M_PI / numberOfVertices;
+        }
+        angle+=M_PI/3;
     }
 
     printf("%d", vertices.size());
