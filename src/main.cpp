@@ -30,8 +30,8 @@ int main()
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
@@ -113,8 +113,8 @@ int main()
     float angle = 0;
 
     for (int i = 0; i <= numberOfVertices; i++) {
-        vertices.push_back(sin(angle)*radius);
         vertices.push_back(cos(angle)*radius);
+        vertices.push_back(sin(angle)*radius);
         vertices.push_back(0.0);
         angle+= 2.0*M_PI/numberOfVertices;
     }
