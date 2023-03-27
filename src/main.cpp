@@ -15,7 +15,7 @@ void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 800;
 
 
 int main()
@@ -54,9 +54,7 @@ int main()
     // build and compile our shader program
     // ------------------------------------
     Shader ourShader("../res/shaders/shader.vert",
-                     "../res/shaders/shader.frag"
-                     );
-
+                     "../res/shaders/shader.frag");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
