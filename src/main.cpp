@@ -62,21 +62,23 @@ int main()
     // ------------------------------------------------------------------
 
     std::vector<float> vertices;
+//
+//    int numberOfVertices = 1000;
+//    float radiusSmall = 0.40;
+//    float radiusBig = 0.61;
+//    float angle = 0;
+//
+//    for (int i = 0; i <= numberOfVertices ; i++) {
+//        vertices.push_back(cos(angle) * radiusSmall);
+//        vertices.push_back(sin(angle) * radiusSmall);
+//        vertices.push_back(0.0);
+//        vertices.push_back(cos(angle) * radiusBig);
+//        vertices.push_back(sin(angle) * radiusBig);
+//        vertices.push_back(0.0);
+//        angle += 4.0* M_PI / numberOfVertices;
+//    }
 
-    int numberOfVertices = 1000;
-    float radiusSmall = 0.40;
-    float radiusBig = 0.61;
-    float angle = 0;
-
-    for (int i = 0; i <= numberOfVertices ; i++) {
-        vertices.push_back(cos(angle) * radiusSmall);
-        vertices.push_back(sin(angle) * radiusSmall);
-        vertices.push_back(0.0);
-        vertices.push_back(cos(angle) * radiusBig);
-        vertices.push_back(sin(angle) * radiusBig);
-        vertices.push_back(0.0);
-        angle += 4.0* M_PI / numberOfVertices;
-    }
+    vertices.push_back()
 
 
     unsigned int VBO, VAO;
