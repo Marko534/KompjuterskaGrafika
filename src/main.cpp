@@ -124,10 +124,11 @@ int main() {
             vertices.push_back(cos(angle) * radiusMedium);
             vertices.push_back(sin(angle) * radiusMedium);
             vertices.push_back(0.0);
+            angle += M_PI / numberOfVertices;
             vertices.push_back(cos(angle) * radiusBig);
             vertices.push_back(sin(angle) * radiusBig);
             vertices.push_back(0.0);
-            angle += 2.0 * M_PI / numberOfVertices;
+            angle += M_PI / numberOfVertices;
         }
         angle+=M_PI/3;
     }
