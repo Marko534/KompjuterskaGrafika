@@ -62,24 +62,33 @@ int main()
     // ------------------------------------------------------------------
 
     std::vector<float> vertices;
-//
-//    int numberOfVertices = 1000;
-//    float radiusSmall = 0.40;
-//    float radiusBig = 0.61;
-//    float angle = 0;
-//
-//    for (int i = 0; i <= numberOfVertices ; i++) {
-//        vertices.push_back(cos(angle) * radiusSmall);
-//        vertices.push_back(sin(angle) * radiusSmall);
-//        vertices.push_back(0.0);
-//        vertices.push_back(cos(angle) * radiusBig);
-//        vertices.push_back(sin(angle) * radiusBig);
-//        vertices.push_back(0.0);
-//        angle += 4.0* M_PI / numberOfVertices;
-//    }
 
-    vertices.push_back()
+    int numberOfVertices = 1000;
+    float radiusSmall = 0.40;
+    float radiusBig = 0.61;
+    float angle = 0;
 
+    for (int i = 0; i <= numberOfVertices ; i++) {
+        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
+        vertices.push_back(sin(angle) * radiusSmall);
+        vertices.push_back(0.0);
+        vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
+        vertices.push_back(0.0);
+        angle += 4.0* M_PI / numberOfVertices;
+    }
+
+//    vertices.push_back(0.5);
+//    vertices.push_back(-0.5);
+//    vertices.push_back(0.0);
+//
+//    vertices.push_back(-0.5);
+//    vertices.push_back(-0.5);
+//    vertices.push_back(0.0);
+//
+//    vertices.push_back(0.0);
+//    vertices.push_back(0.5);
+//    vertices.push_back(0.0);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -120,7 +129,7 @@ int main()
         ourShader.use();
         // 0.165,0.576,0.82
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfVertices+2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfVertices +2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
