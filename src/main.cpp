@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <OpenGLPrj.hpp>
 
 #include <GLFW/glfw3.h>
@@ -69,7 +70,7 @@ int main()
 
     angle = 0;
 
-    for (int i = 0; i <= numberOfVertices / 6; i++) {
+    for (int i = 0; i <= numberOfVertices ; i++) {
         vertices.push_back(cos(angle) * radiusSmall);
         vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(0.0);
@@ -77,7 +78,6 @@ int main()
         vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
         angle += 2.0 * M_PI / numberOfVertices;
-        angle+=M_PI/3;
     }
 
 
@@ -88,14 +88,10 @@ int main()
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), static_cast<void*>(nullptr));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(0);
-
-
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
@@ -122,8 +118,12 @@ int main()
 
         // render the triangle
         ourShader.use();
+
+        int vertexColorLocation = glGetUniformLocation(ourShader, "ourColor");
+        glUseProgram(ourShader);
+        glUniform3f(vertexColorLocation, 0.165,0.576,0.82);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfVertices+2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
