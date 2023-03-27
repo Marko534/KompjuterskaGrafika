@@ -62,6 +62,22 @@ int main()
     // ------------------------------------------------------------------
 
     std::vector<float> vertices;
+    //RECTANGLE
+    vertices.push_back(-0.55);
+    vertices.push_back(0.5);
+    vertices.push_back(0.0);
+
+    vertices.push_back(-0.8);
+    vertices.push_back(0.5);
+    vertices.push_back(0.0);
+
+    vertices.push_back(-0.8);
+    vertices.push_back(-0.5);
+    vertices.push_back(0.0);
+
+    vertices.push_back(-0.55);
+    vertices.push_back(-0.5);
+    vertices.push_back(0.0);
 
     int numberOfVertices = 1000;
     float radiusSmall = 0.40;
@@ -79,22 +95,6 @@ int main()
         angle += 2.0* M_PI / numberOfVertices;
     }
 
-    //RECTANGLE
-    vertices.push_back(-0.55);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.8);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.8);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.55);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -135,10 +135,8 @@ int main()
         ourShader.use();
         // 0.165,0.576,0.82
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfVertices +2);
-
-        ourShader.use();
-        glDrawArrays(GL_TRIANGLE_FAN, numberOfVertices+2, 4);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        glDrawArrays(GL_TRIANGLE_STRIP, 4, numberOfVertices +2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
