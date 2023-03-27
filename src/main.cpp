@@ -62,96 +62,152 @@ int main() {
 
     std::vector<float> vertices;
     //Number devisable by 6
-    int numberOfVertices = 18;
+    int numberOfVertices = 996;
     float radius = 0.9;
     float angle = 0;
     float color[3] = {1.0, 0.0, 0.0};
-
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
-
-    vertices.push_back(1.0f);
-    vertices.push_back(1.0f);
-    vertices.push_back(1.0f);
+//
+//    vertices.push_back(0.0f);
+//    vertices.push_back(0.0f);
+//    vertices.push_back(0.0f);
+//
+//    vertices.push_back(1.0f);
+//    vertices.push_back(1.0f);
+//    vertices.push_back(1.0f);
 
     for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+
         vertices.push_back(cos(angle) * radius);
         vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+
         color[1]+= 6.0/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
 
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
 
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
         vertices.push_back(cos(angle) * radius);
         vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+
         color[0]-= 6.0/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
 
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
 
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
         vertices.push_back(cos(angle) * radius);
         vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+
         color[2]+= 6.0/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
 
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
 
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
         vertices.push_back(cos(angle) * radius);
         vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+
         color[1]-= 6.0/numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
 
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
 
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
         vertices.push_back(cos(angle) * radius);
         vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+
         color[0]+= 6.0/numberOfVertices;
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
         angle += 2.0 * M_PI / numberOfVertices;
     }
 
     for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-        color[2]-= 6.0/numberOfVertices;
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
+        vertices.push_back(0.0f);
 
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
 
+        vertices.push_back(cos(angle) * radius);
+        vertices.push_back(sin(angle) * radius);
+        vertices.push_back(0.0);
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+
+        color[2]-= 6.0/numberOfVertices;
         angle += 2.0 * M_PI / numberOfVertices;
     }
+
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
+    vertices.push_back(1.0);
+    vertices.push_back(0.0);
+    vertices.push_back(0.0);
 
     vertices.push_back(radius);
     vertices.push_back(0.0);
@@ -160,8 +216,6 @@ int main() {
     vertices.push_back(1.0);
     vertices.push_back(0.0);
     vertices.push_back(0.0);
-
-
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -204,7 +258,7 @@ int main() {
 
         ourShader.use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 2*numberOfVertices + 2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
