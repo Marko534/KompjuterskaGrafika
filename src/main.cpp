@@ -1,4 +1,5 @@
 #define _USE_MATH_DEFINES
+
 #include <OpenGLPrj.hpp>
 
 #include <GLFW/glfw3.h>
@@ -12,7 +13,8 @@
 
 const std::string program_name = ("GLSL Shader class example");
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
 void processInput(GLFWwindow *window);
 
 // settings
@@ -20,8 +22,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
 
 
-int main()
-{
+int main() {
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -35,9 +36,8 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, program_name.c_str(), nullptr, nullptr);
-    if (window == nullptr)
-    {
+    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, program_name.c_str(), nullptr, nullptr);
+    if (window == nullptr) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
@@ -47,8 +47,7 @@ int main()
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
-    {
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
@@ -62,30 +61,115 @@ int main()
     // ------------------------------------------------------------------
 
     std::vector<float> vertices;
-
-    int numberOfVertices = 30;
+    //Number devisable by 6
+    int numberOfVertices = 996;
     float radius = 0.9;
     float angle = 0;
+    float color[3] = {1.0, 0.0, 0.0};
 
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
-    vertices.push_back(0.5f);
-    vertices.push_back(0.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(1.0f);
     vertices.push_back(0.0f);
 
-    for (int i = 0; i <= numberOfVertices ; i++) {
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
         vertices.push_back(cos(angle) * radius);
         vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
+        color[1]+= 6.0/numberOfVertices;
 
-        vertices.push_back(0.5f);
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+        vertices.push_back(1.0f);
 
-        angle += 2.0* M_PI / numberOfVertices;
+        angle += 2.0 * M_PI / numberOfVertices;
     }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle) * radius);
+        vertices.push_back(sin(angle) * radius);
+        vertices.push_back(0.0);
+        color[0]-= 6.0/numberOfVertices;
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+        vertices.push_back(1.0f);
+
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle) * radius);
+        vertices.push_back(sin(angle) * radius);
+        vertices.push_back(0.0);
+        color[2]+= 6.0/numberOfVertices;
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+        vertices.push_back(1.0f);
+
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle) * radius);
+        vertices.push_back(sin(angle) * radius);
+        vertices.push_back(0.0);
+        color[1]-= 6.0/numberOfVertices;
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+        vertices.push_back(1.0f);
+
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle) * radius);
+        vertices.push_back(sin(angle) * radius);
+        vertices.push_back(0.0);
+        color[0]+= 6.0/numberOfVertices;
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+        vertices.push_back(1.0f);
+
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    for (int i = 0; i < numberOfVertices/6; i++) {
+        vertices.push_back(cos(angle) * radius);
+        vertices.push_back(sin(angle) * radius);
+        vertices.push_back(0.0);
+        color[2]-= 6.0/numberOfVertices;
+
+        vertices.push_back(color[0]);
+        vertices.push_back(color[1]);
+        vertices.push_back(color[2]);
+        vertices.push_back(1.0f);
+
+        angle += 2.0 * M_PI / numberOfVertices;
+    }
+
+    vertices.push_back(radius);
+    vertices.push_back(0.0);
+    vertices.push_back(0.0);
+
+    vertices.push_back(1.0);
+    vertices.push_back(0.0);
+    vertices.push_back(0.0);
+    vertices.push_back(1.0f);
+
 
 
     unsigned int VBO, VAO;
@@ -97,10 +181,10 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), static_cast<void*>(nullptr));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), static_cast<void *>(nullptr));
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
@@ -115,8 +199,7 @@ int main()
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // input
         // -----
         processInput(window);
@@ -130,7 +213,7 @@ int main()
 
         ourShader.use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_FAN, 0 , numberOfVertices + 2);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices + 2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -166,8 +249,7 @@ void processInput(GLFWwindow *window) {
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
+void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     // make sure the viewport matches the new window dimensions; note that width and
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
