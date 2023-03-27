@@ -72,23 +72,29 @@ int main()
         vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
         vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(0.0);
+        angle += 2.0* M_PI / numberOfVertices;
         vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
         vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle += 4.0* M_PI / numberOfVertices;
+        angle += 2.0* M_PI / numberOfVertices;
     }
 
-//    vertices.push_back(0.5);
-//    vertices.push_back(-0.5);
-//    vertices.push_back(0.0);
-//
-//    vertices.push_back(-0.5);
-//    vertices.push_back(-0.5);
-//    vertices.push_back(0.0);
-//
-//    vertices.push_back(0.0);
-//    vertices.push_back(0.5);
-//    vertices.push_back(0.0);
+    //RECTANGLE
+    vertices.push_back(-0.55);
+    vertices.push_back(0.5);
+    vertices.push_back(0.0);
+
+    vertices.push_back(-0.8);
+    vertices.push_back(0.5);
+    vertices.push_back(0.0);
+
+    vertices.push_back(-0.8);
+    vertices.push_back(-0.5);
+    vertices.push_back(0.0);
+
+    vertices.push_back(-0.55);
+    vertices.push_back(0.5);
+    vertices.push_back(0.0);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -130,6 +136,9 @@ int main()
         // 0.165,0.576,0.82
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfVertices +2);
+
+        ourShader.use();
+        glDrawArrays(GL_TRIANGLE_FAN, numberOfVertices+2, 4);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
