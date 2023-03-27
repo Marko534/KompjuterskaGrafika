@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <vector>
 
 
 const std::string program_name = ("GLSL Shader class example");
@@ -58,13 +59,27 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-        float vertices[] = {
-        // positions         // colors
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top
 
-    };
+    std::vector<float> vertices;
+
+    int numberOfVertices = 1000;
+    float radiusSmall = 0.40;
+    float radiusBig = 0.61;
+    float angle = 0;
+
+    angle = 0;
+
+    for (int i = 0; i <= numberOfVertices / 6; i++) {
+        vertices.push_back(cos(angle) * radiusSmall);
+        vertices.push_back(sin(angle) * radiusSmall);
+        vertices.push_back(0.0);
+        vertices.push_back(cos(angle) * radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
+        vertices.push_back(0.0);
+        angle += 2.0 * M_PI / numberOfVertices;
+        angle+=M_PI/3;
+    }
+
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
