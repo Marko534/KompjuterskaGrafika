@@ -105,7 +105,7 @@ int main() {
     vertices.push_back(0.0);
     vertices.push_back(0.0);
     //Da e delivo so 6 e preporaclivo
-    int numberOfVertices = 42;
+    int numberOfVertices = 996;
     float radiusSmall = 0.17;
     float radiusMedium = 0.25;
     float radiusBig = 0.84;
