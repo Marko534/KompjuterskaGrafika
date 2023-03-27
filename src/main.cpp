@@ -68,8 +68,6 @@ int main()
     float radiusBig = 0.61;
     float angle = 0;
 
-    angle = 0;
-
     for (int i = 0; i <= numberOfVertices ; i++) {
         vertices.push_back(cos(angle) * radiusSmall);
         vertices.push_back(sin(angle) * radiusSmall);
@@ -77,7 +75,7 @@ int main()
         vertices.push_back(cos(angle) * radiusBig);
         vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle += 2.0 * M_PI / numberOfVertices;
+        angle += 4.0* M_PI / numberOfVertices;
     }
 
 
@@ -118,10 +116,7 @@ int main()
 
         // render the triangle
         ourShader.use();
-
-        int vertexColorLocation = glGetUniformLocation(ourShader, "ourColor");
-        glUseProgram(ourShader);
-        glUniform3f(vertexColorLocation, 0.165,0.576,0.82);
+        // 0.165,0.576,0.82
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfVertices+2);
 
