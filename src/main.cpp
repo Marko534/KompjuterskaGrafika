@@ -62,34 +62,18 @@ int main()
     // ------------------------------------------------------------------
 
     std::vector<float> vertices;
-    //RECTANGLE
-    vertices.push_back(-0.55);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
 
-    vertices.push_back(-0.8);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.8);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.55);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.0);
-
-    int numberOfVertices = 1000;
-    float radiusSmall = 0.40;
-    float radiusBig = 0.61;
+    int numberOfVertices = 30;
+    float radius = 0.9;
     float angle = 0;
 
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+    vertices.push_back(0.0f);
+
     for (int i = 0; i <= numberOfVertices ; i++) {
-        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusSmall);
-        vertices.push_back(0.0);
-        vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusBig);
+        vertices.push_back(cos(angle) * radius);
+        vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
         angle += 2.0* M_PI / numberOfVertices;
     }
@@ -135,10 +119,8 @@ int main()
         ourShader.use();
         // 0.165,0.576,0.82
         glBindVertexArray(VAO);
-        ourShader.passColor3("COLOR", new float[] {0.192,0.192,0.514});
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
         ourShader.passColor3("COLOR", new float[] {0.165, 0.576, 0.82});
-        glDrawArrays(GL_TRIANGLE_STRIP, 4,2 * ( numberOfVertices + 1));
+        glDrawArrays(GL_TRIANGLE_FAN, 0 , numberOfVertices + 2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
