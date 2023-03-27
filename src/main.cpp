@@ -105,7 +105,7 @@ int main() {
     vertices.push_back(0.0);
     vertices.push_back(0.0);
     //Da e delivo so 6 e preporaclivo
-    int numberOfVertices = 996;
+    int numberOfVertices = 42;
     float radiusSmall = 0.17;
     float radiusMedium = 0.25;
     float radiusBig = 0.84;
@@ -119,18 +119,18 @@ int main() {
     }
 
     angle = 0;
-    for(int j = 0; j<3; j++) {
+    for (int j = 0; j < 3; j++) {
         for (int i = 0; i <= numberOfVertices / 6; i++) {
             vertices.push_back(cos(angle) * radiusMedium);
             vertices.push_back(sin(angle) * radiusMedium);
             vertices.push_back(0.0);
-            angle += M_PI / numberOfVertices;
             vertices.push_back(cos(angle) * radiusBig);
             vertices.push_back(sin(angle) * radiusBig);
             vertices.push_back(0.0);
-            angle += M_PI / numberOfVertices;
+            angle += 2 * M_PI / numberOfVertices;
         }
-        angle+=M_PI/3;
+        angle -= 2 * M_PI / numberOfVertices;
+        angle += M_PI / 3;
     }
 
     printf("%d", vertices.size());
@@ -178,9 +178,8 @@ int main() {
                 VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices + 2);
         glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices + 2, numberOfVertices / 3 + 2);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices + 2 + numberOfVertices / 3 + 2, numberOfVertices / 3 + 2);
-        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices + 2 + 2 * (numberOfVertices / 3 + 2),
-                     numberOfVertices / 3 + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices + 4 + numberOfVertices / 3, numberOfVertices / 3 + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, numberOfVertices +2 + 2 * (numberOfVertices / 3+2), numberOfVertices / 3 + 2);
 
         // glBindVertexArray(0); // no need to unbind it every time
 
