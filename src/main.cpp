@@ -62,7 +62,7 @@ int main() {
 
     std::vector<float> vertices;
     //Number devisable by 6
-    int numberOfVertices = 996;
+    int numberOfVertices = 18;
     float radius = 0.9;
     float angle = 0;
     float color[3] = {1.0, 0.0, 0.0};
@@ -74,8 +74,6 @@ int main() {
     vertices.push_back(1.0f);
     vertices.push_back(1.0f);
     vertices.push_back(1.0f);
-    vertices.push_back(0.0f);
-
 
     for (int i = 0; i < numberOfVertices/6; i++) {
         vertices.push_back(cos(angle) * radius);
@@ -86,7 +84,6 @@ int main() {
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
-        vertices.push_back(1.0f);
 
         angle += 2.0 * M_PI / numberOfVertices;
     }
@@ -100,7 +97,6 @@ int main() {
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
-        vertices.push_back(1.0f);
 
         angle += 2.0 * M_PI / numberOfVertices;
     }
@@ -114,7 +110,6 @@ int main() {
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
-        vertices.push_back(1.0f);
 
         angle += 2.0 * M_PI / numberOfVertices;
     }
@@ -128,7 +123,6 @@ int main() {
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
-        vertices.push_back(1.0f);
 
         angle += 2.0 * M_PI / numberOfVertices;
     }
@@ -142,7 +136,6 @@ int main() {
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
-        vertices.push_back(1.0f);
 
         angle += 2.0 * M_PI / numberOfVertices;
     }
@@ -156,7 +149,6 @@ int main() {
         vertices.push_back(color[0]);
         vertices.push_back(color[1]);
         vertices.push_back(color[2]);
-        vertices.push_back(1.0f);
 
         angle += 2.0 * M_PI / numberOfVertices;
     }
@@ -168,7 +160,6 @@ int main() {
     vertices.push_back(1.0);
     vertices.push_back(0.0);
     vertices.push_back(0.0);
-    vertices.push_back(1.0f);
 
 
 
@@ -181,10 +172,10 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), static_cast<void *>(nullptr));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), static_cast<void *>(nullptr));
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
