@@ -88,7 +88,6 @@ int main()
         vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
         vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(0.0);
-        angle += 2.0* M_PI / numberOfVertices;
         vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
         vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
@@ -139,7 +138,7 @@ int main()
         ourShader.passColor3("COLOR", new float[] {0.192,0.192,0.514});
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
         ourShader.passColor3("COLOR", new float[] {0.165, 0.576, 0.82});
-        glDrawArrays(GL_TRIANGLE_STRIP, 4, numberOfVertices +2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 4,2 * ( numberOfVertices + 1));
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
