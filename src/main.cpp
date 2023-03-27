@@ -132,10 +132,13 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // render the triangle
+
         ourShader.use();
         // 0.165,0.576,0.82
         glBindVertexArray(VAO);
+        ourShader.passColor3("COLOR", new float[] {0.192,0.192,0.514});
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        ourShader.passColor3("COLOR", new float[] {0.165, 0.576, 0.82});
         glDrawArrays(GL_TRIANGLE_STRIP, 4, numberOfVertices +2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
