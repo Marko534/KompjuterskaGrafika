@@ -61,8 +61,7 @@ int main() {
     // ------------------------------------------------------------------
 
     std::vector<float> vertices;
-    //Number devisable by 6
-    int numberOfRectangles = 11;
+    int numberOfRectangles = 10;
     float halfSize = 1.0/numberOfRectangles;
     float currentX = 1.0;
 
@@ -77,7 +76,6 @@ int main() {
         vertices.push_back(0.0);
         currentX -= 2*halfSize;
     }
-    std::printf("%d",vertices.size());
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -117,7 +115,10 @@ int main() {
 
         ourShader.use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 2*numberOfRectangles+2);
+        for (int i = 0; i<numberOfRectangles;i++){
+            glDrawArrays(GL_TRIANGLE_STRIP, 2*i, 4);
+
+        }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
