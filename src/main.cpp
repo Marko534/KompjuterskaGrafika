@@ -64,17 +64,21 @@ int main() {
     int numberOfRectangles = 10;
     float halfSize = 1.0/numberOfRectangles;
     float currentX = 1.0;
+    float currentY = 3*halfSize;
 
+    for(int i = 0 ; i<3;i++) {
+        for (int j = 0; j <= numberOfRectangles; j++) {
+            vertices.push_back(currentX);
+            vertices.push_back(currentY);
+            vertices.push_back(0.0);
 
-    for (int i = 0 ; i<= numberOfRectangles;i++){
-        vertices.push_back(currentX);
-        vertices.push_back(-halfSize);
-        vertices.push_back(0.0);
-
-        vertices.push_back(currentX);
-        vertices.push_back(halfSize);
-        vertices.push_back(0.0);
-        currentX -= 2*halfSize;
+            vertices.push_back(currentX);
+            vertices.push_back(currentY+2*halfSize);
+            vertices.push_back(0.0);
+            currentX -= 2 * halfSize;
+        }
+        currentX = 1.0;
+        currentY -=4*halfSize;
     }
 
     unsigned int VBO, VAO;
@@ -102,22 +106,47 @@ int main() {
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window)) {
-        // input
-        // -----
+
         processInput(window);
 
-        // render
-        // ------
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        // render the triangle
-
         ourShader.use();
+
+        // Setting the colors for the RED part
+        ourShader.setFloat("RED", 1.0f);
+        ourShader.setFloat("GREEN", 0.0f);
+        ourShader.setFloat("BLUE", 0.0f);
+        float red = 1.0;
         glBindVertexArray(VAO);
         for (int i = 0; i<numberOfRectangles;i++){
             glDrawArrays(GL_TRIANGLE_STRIP, 2*i, 4);
+            red-=1.0/numberOfRectangles;
+            ourShader.setFloat("RED", red);
+        }
 
+        // Setting the colors for the GREEN part
+        ourShader.setFloat("RED", 0.0f);
+        ourShader.setFloat("GREEN", 1.0f);
+        ourShader.setFloat("BLUE", 0.0f);
+        float green = 1.0;
+        glBindVertexArray(VAO);
+        for (int i = numberOfRectangles+1; i<2*numberOfRectangles+1;i++){
+            glDrawArrays(GL_TRIANGLE_STRIP, 2*i, 4);
+            green-=1.0/numberOfRectangles;
+            ourShader.setFloat("GREEN", green);
+        }
+
+        // Setting the colors for the BLUE part
+        ourShader.setFloat("RED", 0.0f);
+        ourShader.setFloat("GREEN", 0.0f);
+        ourShader.setFloat("BLUE", 1.0f);
+        float blue = 1.0;
+        glBindVertexArray(VAO);
+        for (int i = 2*numberOfRectangles+2; i<3*numberOfRectangles+2;i++){
+            glDrawArrays(GL_TRIANGLE_STRIP, 2*i, 4);
+            blue-=1.0/numberOfRectangles;
+            ourShader.setFloat("BLUE", blue);
         }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
