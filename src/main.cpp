@@ -62,160 +62,22 @@ int main() {
 
     std::vector<float> vertices;
     //Number devisable by 6
-    int numberOfVertices = 996;
-    float radius = 0.9;
-    float angle = 0;
-    float color[3] = {1.0, 0.0, 0.0};
-//
-//    vertices.push_back(0.0f);
-//    vertices.push_back(0.0f);
-//    vertices.push_back(0.0f);
-//
-//    vertices.push_back(1.0f);
-//    vertices.push_back(1.0f);
-//    vertices.push_back(1.0f);
+    int numberOfRectangles = 11;
+    float halfSize = 1/numberOfRectangles;
+    float currentX = 1.0;
 
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
 
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
+    for (int i = 0 ; i<= numberOfRectangles;i++){
+        vertices.push_back(currentX);
+        vertices.push_back(-halfSize);
         vertices.push_back(0.0);
 
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[1]+= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
+        vertices.push_back(currentX);
+        vertices.push_back(halfSize);
         vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[0]-= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
+        currentX -= 2*halfSize;
     }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[2]+= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[1]-= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[0]+= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-        vertices.push_back(0.0f);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[2]-= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
-
-    vertices.push_back(1.0);
-    vertices.push_back(0.0);
-    vertices.push_back(0.0);
-
-    vertices.push_back(radius);
-    vertices.push_back(0.0);
-    vertices.push_back(0.0);
-
-    vertices.push_back(1.0);
-    vertices.push_back(0.0);
-    vertices.push_back(0.0);
+    std::printf("%d",vertices.size());
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -226,11 +88,8 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), static_cast<void *>(nullptr));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
     glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
@@ -258,7 +117,7 @@ int main() {
 
         ourShader.use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 2*numberOfVertices + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfRectangles+2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
