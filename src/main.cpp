@@ -63,7 +63,7 @@ int main() {
     std::vector<float> vertices;
     //Number devisable by 6
     int numberOfRectangles = 11;
-    float halfSize = 1/numberOfRectangles;
+    float halfSize = 1.0/numberOfRectangles;
     float currentX = 1.0;
 
 
@@ -88,7 +88,7 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void *>(nullptr));
     glEnableVertexAttribArray(0);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
@@ -117,7 +117,7 @@ int main() {
 
         ourShader.use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, numberOfRectangles+2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 2*numberOfRectangles+2);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
