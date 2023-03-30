@@ -5,6 +5,7 @@ out vec3 ourColor;
 //ZOSTO TREBA DA NAPRAJME ourColor = aColor a ne samo da out vec3 aColor
 void main()
 {
+
     gl_Position = vec4(aPos, 1.0);
     ourColor = aColor;
 }
