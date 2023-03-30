@@ -19,7 +19,7 @@ void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 800;
+const unsigned int SCR_HEIGHT = SCR_WIDTH;
 
 
 int main() {
@@ -56,6 +56,8 @@ int main() {
     // ------------------------------------
     Shader ourShader("../res/shaders/shader.vert",
                      "../res/shaders/shader.frag");
+
+    ourShader.setInt("RESOLUTION", SCR_HEIGHT);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
