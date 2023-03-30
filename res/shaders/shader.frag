@@ -1,9 +1,6 @@
 #version 330 core
-out vec4 FragColor;
 
-in vec3 ourColor;
-
-void main()
-{
-    FragColor = vec4(ourColor, 1.0f);
+void main() {
+    vec2 pos = gl_Position.xy;
+    gl_FragColor = vec4(pos.x,pos.y,0.0,1.0);
 }
