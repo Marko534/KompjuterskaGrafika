@@ -66,103 +66,18 @@ int main() {
     int numberOfVertices = 996;
     float radius = 0.9;
     float angle = 0;
-    float color[3] = {1.0, 0.0, 0.0};
 
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
     vertices.push_back(0.0f);
 
-    vertices.push_back(1.0f);
-    vertices.push_back(1.0f);
-    vertices.push_back(1.0f);
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
+    for (int i = 0; i <= numberOfVertices; i++) {
         vertices.push_back(cos(angle) * radius);
         vertices.push_back(sin(angle) * radius);
         vertices.push_back(0.0);
 
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[1]+= 6.0/numberOfVertices;
         angle += 2.0 * M_PI / numberOfVertices;
     }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[0]-= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[2]+= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[1]-= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[0]+= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    for (int i = 0; i < numberOfVertices/6; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        vertices.push_back(color[0]);
-        vertices.push_back(color[1]);
-        vertices.push_back(color[2]);
-
-        color[2]-= 6.0/numberOfVertices;
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
-
-    vertices.push_back(radius);
-    vertices.push_back(0.0);
-    vertices.push_back(0.0);
-
-    vertices.push_back(1.0);
-    vertices.push_back(0.0);
-    vertices.push_back(0.0);
-
-
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -173,11 +88,9 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), static_cast<void *>(nullptr));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void *>(nullptr));
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
