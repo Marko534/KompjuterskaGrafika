@@ -57,7 +57,6 @@ int main() {
     Shader ourShader("../res/shaders/shader.vert",
                      "../res/shaders/shader.frag");
 
-    ourShader.setInt("RESOLUTION", SCR_HEIGHT);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -205,6 +204,7 @@ int main() {
         // render the triangle
 
         ourShader.use();
+        ourShader.setFloat("RESOLUTION", SCR_HEIGHT);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices + 2);
 
