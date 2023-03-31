@@ -54,7 +54,6 @@ int main() {
     Shader ourShader("../res/shaders/shader.vert",
                      "../res/shaders/shader.frag"
     );
-    ourShader.setFloat("RESOLUTION", 800.0);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -101,7 +100,8 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // render the triangle
-//        ourShader.use();
+        ourShader.use();
+        ourShader.setFloat("RESOLUTION", 800.0);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
