@@ -16,7 +16,7 @@ void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 800;
+const unsigned int SCR_HEIGHT = SCR_WIDTH;
 
 
 int main() {
@@ -54,15 +54,15 @@ int main() {
     Shader ourShader("../res/shaders/shader.vert",
                      "../res/shaders/shader.frag"
     );
-
+    ourShader.setFloat("RESOLUTION", 800.0);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
             // positions         // colors
-            0.5f, -0.5f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f,// bottom left
-            0.0f, 0.5f, 0.0   // top
+            1.0f, -1.0f, 0.0f, // bottom right
+            -1.0f, -1.0f, 0.0f,// bottom left
+            0.0f, 1.0f, 0.0   // top
 
     };
 
@@ -97,11 +97,11 @@ int main() {
 
         // render
         // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // render the triangle
-        ourShader.use();
+//        ourShader.use();
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
