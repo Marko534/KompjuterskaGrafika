@@ -63,21 +63,24 @@ int main() {
 
     std::vector<float> vertices;
     //Number devisable by 6
-    int numberOfVertices = 996;
-    float radius = 0.9;
-    float angle = 0;
 
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
+    vertices.push_back(-1.0f);
+    vertices.push_back(-1.0f);
     vertices.push_back(0.0f);
 
-    for (int i = 0; i <= numberOfVertices; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
+    vertices.push_back(1.0f);
+    vertices.push_back(-1.0f);
+    vertices.push_back(0.0f);
 
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
+
+    vertices.push_back(-1.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
+
+
+    vertices.push_back(1.0f);
+    vertices.push_back(1.0f);
+    vertices.push_back(0.0f);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -117,9 +120,9 @@ int main() {
         // render the triangle
 
         ourShader.use();
-        ourShader.setFloat("RESOLUTION", SCR_HEIGHT);
+        ourShader.setInt("GRID_SIZE", 8);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices + 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

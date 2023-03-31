@@ -32,6 +32,7 @@ public:
     // I MADE THIS 211518
     void passColor3(const std::string &name, float  value[]) const;
 
+    void setFloa2(const std::string &name, float value1, float value2) const;
 private:
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------

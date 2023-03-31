@@ -95,6 +95,11 @@ void Shader::setFloat(const std::string &name, float value) const
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
+void Shader::setFloa2(const std::string &name, float value1, float value2) const
+{
+    glUniform2f(glGetUniformLocation(ID, name.c_str()), value1, value2);
+}
+
 void Shader::passColor3(const std::string &name, float value[]) const
 {
     glUniform3f(glGetUniformLocation(ID, name.c_str()), value[0], value[1], value[2]);
