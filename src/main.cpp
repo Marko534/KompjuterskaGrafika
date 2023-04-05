@@ -67,10 +67,9 @@ int main()
     // ------------------------------------------------------------------
         float vertices[] = {
         // positions                   // texture coordinates
-            0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-           -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
-           -0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left
+            0.7f, -0.4f, 0.0f, 1.0f, 0.0f, // bottom right
+           0.0f, 0.8f, 0.0f,   0.5f, 1.0f, // top
+           -0.7f,  -0.4f, 0.0f,   0.0f, 0.0f  // bottom left
 
     };
 
@@ -107,7 +106,7 @@ int main()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    unsigned char *data = stbi_load("../res/textures/Checkerboard_pattern.svg.png", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("../res/textures/Checkerboard_pattern.png", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -140,7 +139,7 @@ int main()
         // render container
         ourShader.use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
