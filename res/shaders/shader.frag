@@ -6,7 +6,7 @@ const vec4 COL_ODD = vec4(0.0, 0.0, 0.0, 1.0);
 
 void main()
 {
-    vec2 m = mod(gl_FragCoord.xy,  GRID_SIZE);
+    vec2 m = mod(gl_FragCoord.xy,  vec2(GRID_SIZE));
     if (m.x < GRID_SIZE && m.y < GRID_SIZE ||
     m.x >= GRID_SIZE && m.y >= GRID_SIZE)
     fragColor = COL_EVEN;

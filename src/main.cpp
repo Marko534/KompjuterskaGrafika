@@ -120,7 +120,7 @@ int main() {
         // render the triangle
 
         ourShader.use();
-        ourShader.setInt("GRID_SIZE", 8);
+        ourShader.setInt("GRID_SIZE", 50);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
