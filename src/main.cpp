@@ -64,8 +64,9 @@ int main() {
     float vertices[] = {
             // positions                   // texture coordinates
             1.0f, -1.0f, 0.0f, // bottom right
-            0.0f, 1.0f, 0.0f, // top
-            -1.0f, -1.0f, 0.0f  // bottom left
+            1.0f, 1.0f, 0.0f, // top right
+            -1.0f, 1.0f, 0.0f,  // bottom left
+            -1.0f,-1.0f,0.0f // bottom right
     };
 
     unsigned int VBO, VAO;
@@ -109,7 +110,7 @@ int main() {
 
         ourShader.use();
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
