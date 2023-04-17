@@ -61,34 +61,25 @@ int main() {
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
 
-    std::vector<float> vertices;
-    //Number devisable by 6
-    int numberOfVertices = 996;
-    float radius = 0.9;
-    float angle = 0;
-
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
-    vertices.push_back(0.0f);
-
-    for (int i = 0; i <= numberOfVertices; i++) {
-        vertices.push_back(cos(angle) * radius);
-        vertices.push_back(sin(angle) * radius);
-        vertices.push_back(0.0);
-
-        angle += 2.0 * M_PI / numberOfVertices;
-    }
+    float vertices[] = {
+            // positions                   // texture coordinates
+            0.7f, -0.4f, 0.0f,
+            0.0f, 0.8f, 0.0f,
+            -0.7f,  -0.4f, 0.0f
+    };
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void *>(nullptr));
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(0);
 
 
@@ -117,9 +108,8 @@ int main() {
         // render the triangle
 
         ourShader.use();
-        ourShader.setFloat("RESOLUTION", SCR_HEIGHT);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, numberOfVertices + 2);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 3);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
