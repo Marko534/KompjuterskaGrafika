@@ -4,5 +4,6 @@ out vec4 fragColor;
 //https://www.shadertoy.com/view/tscBWl
 void main()
 {
-    fragColor = vec4(fract((bPos.x+1))*5.0f);
+    //5.0 number of colums times 2
+    fragColor = vec4(max(sign(fract((bPos.x+1)*5.0)-0.5) * sign(fract((bPos.y+1)*5.0)-0.5),0.0));
 }
