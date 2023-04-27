@@ -92,7 +92,10 @@ int main() {
     // bind the VAO (it was already bound, but just to demonstrate): seeing as we only have a single VAO we can
     // just bind it beforehand before rendering the respective triangle; this is another approach.
     glBindVertexArray(VAO);
-
+    float numbOfRows= 5.0;
+    float numbOfColumns = 5.0;
+    numbOfColumns = numbOfColumns/2;
+    numbOfRows = numbOfRows/2;
 
     // render loop
     // -----------
