@@ -17,8 +17,8 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 800;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 
 // camera
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -283,6 +283,9 @@ void processInput(GLFWwindow *window) {
     camera.ProcessKeyboard(LEFT, deltaTime);
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     camera.ProcessKeyboard(RIGHT, deltaTime);
+  if (glfwGetKey(window, GLFW_KEY_SPACE)== GLFW_PRESS){
+      camera.ProcessKeyboard(JUMP, deltaTime);
+  }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
