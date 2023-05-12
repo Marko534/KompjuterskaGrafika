@@ -40,7 +40,13 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime) {
   if (direction == RIGHT)
     Position += Right * velocity;
   if (direction == JUMP)
-      Position += Up * MovementSpeed * velocity * 3.0f;
+      if(Position.y < 1) {
+          Position += Up * MovementSpeed * velocity;
+      } //* 3.0f;
+    if (direction == FALL)
+        if(Position.y>0 ) {
+            Position -= Up * MovementSpeed * velocity;
+        }
 }
 
 // Processes input received from a mouse input system. Expects the offset
