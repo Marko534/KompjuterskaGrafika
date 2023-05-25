@@ -20,6 +20,7 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
+const float SPEED = 0.01;
 
 class PacMam {
 private:
@@ -42,6 +43,15 @@ public:
 
     void setDirection(char direction) {
         PacMam::direction = direction;
+        if(direction=='E'){
+            pos += glm::vec3 (SPEED, 0.0f, 0.0f);
+        }else if (direction=='W'){
+            pos += glm::vec3 (-SPEED, 0.0f, 0.0f);
+        }else if (direction=='N'){
+            pos += glm::vec3 (0.0f, SPEED, 0.0f);
+        }else if (direction=='S'){
+            pos += glm::vec3 (0.0f, -SPEED, 0.0f);
+        }
     }
 
     float getRotationAngle(){
@@ -65,7 +75,6 @@ public:
     }
 };
 
-const float SPEED = 0.01;
 PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
 int main() {
@@ -231,20 +240,16 @@ void processInput(GLFWwindow *window) {
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
-        pacMam.setPos(pacMam.getPos() + glm::vec3(SPEED, 0.0f, 0.0f));
         pacMam.setDirection('E');
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT)) {
-        pacMam.setPos(pacMam.getPos() + glm::vec3(-SPEED, 0.0f, 0.0f));
         pacMam.setDirection('W');
     }
     if (glfwGetKey(window, GLFW_KEY_UP)) {
-        pacMam.setPos(pacMam.getPos() + glm::vec3(0.0f, SPEED, 0.0f));
         pacMam.setDirection('N');
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN)) {
         pacMam.setDirection('S');
-        pacMam.setPos(pacMam.getPos() + glm::vec3(0.0f, -SPEED, 0.0f));
     }
 }
 
