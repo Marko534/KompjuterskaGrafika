@@ -18,9 +18,12 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 800;
+const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_HEIGHT = 1080;
 const float SPEED = 0.01;
+static float deltaTime = 0.0f; // time between current frame and last frame
+static float lastFrame = 0.0f;
+
 
 class PacMam {
 private:
@@ -41,16 +44,17 @@ public:
         PacMam::pos = pos;
     }
 
-    void setDirection(char direction) {
+    void setDirection(char direction, float deltaTime) {
+        float velocity = SPEED * deltaTime;
         PacMam::direction = direction;
         if(direction=='E'){
-            pos += glm::vec3 (SPEED, 0.0f, 0.0f);
+            pos += glm::vec3 (velocity, 0.0f, 0.0f);
         }else if (direction=='W'){
-            pos += glm::vec3 (-SPEED, 0.0f, 0.0f);
+            pos += glm::vec3 (-velocity, 0.0f, 0.0f);
         }else if (direction=='N'){
-            pos += glm::vec3 (0.0f, SPEED, 0.0f);
+            pos += glm::vec3 (0.0f, velocity, 0.0f);
         }else if (direction=='S'){
-            pos += glm::vec3 (0.0f, -SPEED, 0.0f);
+            pos += glm::vec3 (0.0f, -velocity, 0.0f);
         }
     }
 
@@ -78,6 +82,8 @@ public:
 PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
 int main() {
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -240,16 +246,16 @@ void processInput(GLFWwindow *window) {
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
-        pacMam.setDirection('E');
+        pacMam.setDirection('E', deltaTime);
     }
     if (glfwGetKey(window, GLFW_KEY_LEFT)) {
-        pacMam.setDirection('W');
+        pacMam.setDirection('W', deltaTime);
     }
     if (glfwGetKey(window, GLFW_KEY_UP)) {
-        pacMam.setDirection('N');
+        pacMam.setDirection('N', deltaTime);
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN)) {
-        pacMam.setDirection('S');
+        pacMam.setDirection('S', deltaTime);
     }
 }
 
