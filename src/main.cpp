@@ -145,6 +145,10 @@ int main() {
         // bind Texture
         glBindTexture(GL_TEXTURE_2D, texture);
 
+        glm::mat4 transform = glm::mat4(1.0f);
+        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        transform = glm::scale(transform, glm::vec3(2.0f,0.5f,1.0f));
+
         // render container
         ourShader.use();
         glBindVertexArray(VAO);
