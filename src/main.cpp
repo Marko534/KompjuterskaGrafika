@@ -1,5 +1,6 @@
-#include <OpenGLPrj.hpp>
+#define _USE_MATH_DEFINES
 
+#include <OpenGLPrj.hpp>
 
 #include <GLFW/glfw3.h>
 
@@ -20,20 +21,19 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
 
-class PacMam{
+class PacMam {
 private:
     glm::vec3 pos;
-    char oldDirection;
-    char newDirection;
+    char direction;
 public:
-    PacMam(const glm::vec3 &pos, char direction) : pos(pos), oldDirection(direction), newDirection(direction) {}
+    PacMam(const glm::vec3 &pos, char direction) : pos(pos), direction(direction){}
 
     const glm::vec3 &getPos() const {
         return pos;
     }
 
     char getDirection() const {
-        return newDirection;
+        return direction;
     }
 
     void setPos(const glm::vec3 &pos) {
@@ -41,11 +41,22 @@ public:
     }
 
     void setDirection(char direction) {
-        PacMam::oldDirection = PacMam::newDirection;
-        PacMam::newDirection = direction;
+        PacMam::direction = direction;
     }
 
+    float getRotationAngle(){
+        if(direction =='E'){
+            return 0.0f;
+        }else if (direction == 'S'){
+            return -M_PI/2;
+        }else if (direction == 'W'){
+            return  M_PI;
+        }else if (direction == 'N'){
+            return M_PI/2;
+        }
+    }
 };
+
 const float SPEED = 0.02;
 PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
@@ -95,10 +106,10 @@ int main() {
     // ------------------------------------------------------------------
     float vertices[] = {
             // positions                             // texture coordinates
-            0.10f, -0.10f, 0.0f,          0.0f, 1.0f, // top right
-            0.10f, 0.10f, 0.0f,         0.0f, 0.0f, // bottom right
-            -0.10f, 0.10f, 0.0,       1.0f, 0.0f, // bottom left
-            -0.10f, -0.10f, 0.0,        1.0f, 1.0f  // top left
+            0.10f, -0.10f, 0.0f, 0.0f, 1.0f, // top right
+            0.10f, 0.10f, 0.0f, 0.0f, 0.0f, // bottom right
+            -0.10f, 0.10f, 0.0, 1.0f, 0.0f, // bottom left
+            -0.10f, -0.10f, 0.0, 1.0f, 1.0f  // top left
 
     };
 
@@ -147,14 +158,11 @@ int main() {
     int width, height, nrChannels;
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
     unsigned char *data = stbi_load("../res/textures/NewPacMan.png", &width, &height, &nrChannels, 0);
-    if (data)
-    {
+    if (data) {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
+    } else {
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
@@ -178,6 +186,7 @@ int main() {
 
         glm::mat4 transform = glm::mat4(1.0f);
         transform = glm::translate(transform, pacMam.getPos());
+
 
 
         // render container
@@ -213,19 +222,19 @@ void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_RIGHT)){
+    if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
         pacMam.setPos(pacMam.getPos() + glm::vec3(SPEED, 0.0f, 0.0f));
         pacMam.setDirection('E');
     }
-    if (glfwGetKey(window, GLFW_KEY_LEFT)){
+    if (glfwGetKey(window, GLFW_KEY_LEFT)) {
         pacMam.setPos(pacMam.getPos() + glm::vec3(-SPEED, 0.0f, 0.0f));
         pacMam.setDirection('W');
     }
-    if (glfwGetKey(window, GLFW_KEY_UP)){
+    if (glfwGetKey(window, GLFW_KEY_UP)) {
         pacMam.setPos(pacMam.getPos() + glm::vec3(0.0f, SPEED, 0.0f));
         pacMam.setDirection('N');
     }
-    if (glfwGetKey(window, GLFW_KEY_DOWN)){
+    if (glfwGetKey(window, GLFW_KEY_DOWN)) {
         pacMam.setDirection('S');
         pacMam.setPos(pacMam.getPos() + glm::vec3(0.0f, -SPEED, 0.0f));
     }
