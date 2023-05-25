@@ -20,7 +20,7 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 1920;
 const unsigned int SCR_HEIGHT = 1080;
-const float SPEED = 0.01;
+const float SPEED = 1000.0f;
 static float deltaTime = 0.0f; // time between current frame and last frame
 static float lastFrame = 0.0f;
 
@@ -82,6 +82,7 @@ public:
 PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
 int main() {
+    float currentFrame = static_cast<float>(glfwGetTime());
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     // glfw: initialize and configure
