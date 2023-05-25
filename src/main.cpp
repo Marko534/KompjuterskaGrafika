@@ -55,9 +55,17 @@ public:
             return M_PI/2;
         }
     }
+
+    glm::vec3 getVec(){
+        if(direction == 'W'){
+            return glm::vec3 (0.0f,1.0f,0.0f);
+        }else{
+            return glm::vec3 (0.0f,0.0f,1.0f);
+        }
+    }
 };
 
-const float SPEED = 0.015;
+const float SPEED = 0.01;
 PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
 int main() {
@@ -186,7 +194,8 @@ int main() {
 
         glm::mat4 transform = glm::mat4(1.0f);
         transform = glm::translate(transform, pacMam.getPos());
-        transform = glm::rotate(transform, pacMam.getRotationAngle(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+        transform = glm::rotate(transform, pacMam.getRotationAngle(), pacMam.getVec());
 
         // render container
         ourShader.use();
