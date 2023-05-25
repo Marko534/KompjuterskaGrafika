@@ -1,5 +1,6 @@
 #include <OpenGLPrj.hpp>
 
+
 #include <GLFW/glfw3.h>
 
 #include <Shader.hpp>
@@ -18,6 +19,35 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
+
+class PacMam{
+private:
+    glm::vec3 pos;
+    char oldDirection;
+    char newDirection;
+public:
+    PacMam(const glm::vec3 &pos, char direction) : pos(pos), oldDirection(direction), newDirection(direction) {}
+
+    const glm::vec3 &getPos() const {
+        return pos;
+    }
+
+    char getDirection() const {
+        return newDirection;
+    }
+
+    void setPos(const glm::vec3 &pos) {
+        PacMam::pos = pos;
+    }
+
+    void setDirection(char direction) {
+        PacMam::oldDirection = PacMam::newDirection;
+        PacMam::newDirection = direction;
+    }
+
+};
+const float SPEED = 0.02;
+PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
 int main() {
     // glfw: initialize and configure
@@ -76,6 +106,7 @@ int main() {
             0, 1, 3, // first triangle
             1, 2, 3  // second triangle
     };
+
 
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
@@ -146,11 +177,15 @@ int main() {
         glBindTexture(GL_TEXTURE_2D, texture);
 
         glm::mat4 transform = glm::mat4(1.0f);
-        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-        transform = glm::scale(transform, glm::vec3(2.0f,0.5f,1.0f));
+        transform = glm::translate(transform, pacMam.getPos());
+
 
         // render container
         ourShader.use();
+
+        unsigned int transformLoc = glGetUniformLocation(ourShader.ID, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
@@ -177,6 +212,23 @@ int main() {
 void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    if (glfwGetKey(window, GLFW_KEY_RIGHT)){
+        pacMam.setPos(pacMam.getPos() + glm::vec3(SPEED, 0.0f, 0.0f));
+        pacMam.setDirection('E');
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT)){
+        pacMam.setPos(pacMam.getPos() + glm::vec3(-SPEED, 0.0f, 0.0f));
+        pacMam.setDirection('W');
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP)){
+        pacMam.setPos(pacMam.getPos() + glm::vec3(0.0f, SPEED, 0.0f));
+        pacMam.setDirection('N');
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN)){
+        pacMam.setDirection('S');
+        pacMam.setPos(pacMam.getPos() + glm::vec3(0.0f, -SPEED, 0.0f));
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
