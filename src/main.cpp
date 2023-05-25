@@ -57,7 +57,7 @@ public:
     }
 };
 
-const float SPEED = 0.02;
+const float SPEED = 0.015;
 PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
 int main() {
@@ -186,8 +186,7 @@ int main() {
 
         glm::mat4 transform = glm::mat4(1.0f);
         transform = glm::translate(transform, pacMam.getPos());
-
-
+        transform = glm::rotate(transform, pacMam.getRotationAngle(), glm::vec3(0.0f, 0.0f, 1.0f));
 
         // render container
         ourShader.use();
