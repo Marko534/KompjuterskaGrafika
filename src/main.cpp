@@ -65,10 +65,10 @@ int main() {
     // ------------------------------------------------------------------
     float vertices[] = {
             // positions                             // texture coordinates
-            0.5f, 0.5f, 0.0f,          1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f,         1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0,       0.0f, 0.0f, // bottom left
-            -0.5f, 0.5f, 0.0,        0.0f, 1.0f  // top left
+            0.10f, -0.10f, 0.0f,          0.0f, 1.0f, // top right
+            0.10f, 0.10f, 0.0f,         0.0f, 0.0f, // bottom right
+            -0.10f, 0.10f, 0.0,       1.0f, 0.0f, // bottom left
+            -0.10f, -0.10f, 0.0,        1.0f, 1.0f  // top left
 
     };
 
@@ -115,11 +115,15 @@ int main() {
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    unsigned char *data = stbi_load("../res/textures/container.jpg", &width, &height, &nrChannels, 0);
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    unsigned char *data = stbi_load("../res/textures/NewPacMan.png", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
-    } else {
+    }
+    else
+    {
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
@@ -135,7 +139,7 @@ int main() {
 
         // render
         // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // bind Texture
