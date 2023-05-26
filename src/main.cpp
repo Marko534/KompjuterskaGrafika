@@ -18,9 +18,9 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 1920;
+const unsigned int SCR_WIDTH = 1080;
 const unsigned int SCR_HEIGHT = 1080;
-const float SPEED = 1000.0f;
+const float SPEED = 1.0f;
 static float deltaTime = 0.0f; // time between current frame and last frame
 static float lastFrame = 0.0f;
 
@@ -34,14 +34,6 @@ public:
 
     const glm::vec3 &getPos() const {
         return pos;
-    }
-
-    char getDirection() const {
-        return direction;
-    }
-
-    void setPos(const glm::vec3 &pos) {
-        PacMam::pos = pos;
     }
 
     void setDirection(char direction, float deltaTime) {
@@ -82,9 +74,7 @@ public:
 PacMam pacMam(glm::vec3(0.0f, 0.0f, 0.0f), 'E');
 
 int main() {
-    float currentFrame = static_cast<float>(glfwGetTime());
-    deltaTime = currentFrame - lastFrame;
-    lastFrame = currentFrame;
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -198,6 +188,11 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         // input
         // -----
+
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         processInput(window);
 
         // render
