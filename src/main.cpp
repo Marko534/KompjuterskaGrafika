@@ -30,7 +30,7 @@ private:
     glm::vec3 pos;
     char direction;
 public:
-    PacMam(const glm::vec3 &pos, char direction) : pos(pos), direction(direction){}
+    PacMam(const glm::vec3 &pos, char direction) : pos(pos), direction(direction) {}
 
     const glm::vec3 &getPos() const {
         return pos;
@@ -47,34 +47,34 @@ public:
     void setDirection(char direction, float deltaTime) {
         float velocity = SPEED * deltaTime;
         PacMam::direction = direction;
-        if(direction=='E'){
-            pos += glm::vec3 (velocity, 0.0f, 0.0f);
-        }else if (direction=='W'){
-            pos += glm::vec3 (-velocity, 0.0f, 0.0f);
-        }else if (direction=='N'){
-            pos += glm::vec3 (0.0f, velocity, 0.0f);
-        }else if (direction=='S'){
-            pos += glm::vec3 (0.0f, -velocity, 0.0f);
+        if (direction == 'E') {
+            pos += glm::vec3(velocity, 0.0f, 0.0f);
+        } else if (direction == 'W') {
+            pos += glm::vec3(-velocity, 0.0f, 0.0f);
+        } else if (direction == 'N') {
+            pos += glm::vec3(0.0f, velocity, 0.0f);
+        } else if (direction == 'S') {
+            pos += glm::vec3(0.0f, -velocity, 0.0f);
         }
     }
 
-    float getRotationAngle(){
-        if(direction =='E'){
+    float getRotationAngle() {
+        if (direction == 'E') {
             return 0.0f;
-        }else if (direction == 'S'){
-            return -M_PI/2;
-        }else if (direction == 'W'){
-            return  M_PI;
-        }else if (direction == 'N'){
-            return M_PI/2;
+        } else if (direction == 'S') {
+            return -M_PI / 2;
+        } else if (direction == 'W') {
+            return M_PI;
+        } else if (direction == 'N') {
+            return M_PI / 2;
         }
     }
 
-    glm::vec3 getVec(){
-        if(direction == 'W'){
-            return glm::vec3 (0.0f,1.0f,0.0f);
-        }else{
-            return glm::vec3 (0.0f,0.0f,1.0f);
+    glm::vec3 getVec() {
+        if (direction == 'W') {
+            return glm::vec3(0.0f, 1.0f, 0.0f);
+        } else {
+            return glm::vec3(0.0f, 0.0f, 1.0f);
         }
     }
 };
