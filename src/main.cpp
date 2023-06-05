@@ -65,38 +65,28 @@ int main() {
     // ------------------------------------------------------------------
 
     std::vector<float> vertices;
-    //RECTANGLE
-    vertices.push_back(-0.55);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
+    //RECTANGLE first bit
+    vertices.push_back(-0.55); vertices.push_back(0.5); vertices.push_back(0.0);
+    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.0);
+    vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
+    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.0);
 
-    vertices.push_back(-0.8);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
+    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.3);
+    vertices.push_back(-0.55); vertices.push_back(0.5); vertices.push_back(0.3);
+    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.3);
+    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.0);
 
-    vertices.push_back(-0.8);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.0);
+    //RECTANGLE second bit
+    vertices.push_back(-0.55); vertices.push_back(0.5); vertices.push_back(0.0);
+    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.0);
+    vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
+    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.0);
 
-    vertices.push_back(-0.55);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.0);
+    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.3);
+    vertices.push_back(-0.55); vertices.push_back(0.5); vertices.push_back(0.3);
+    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.3);
+    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.0);
 
-    vertices.push_back(-0.55);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.3);
-
-    vertices.push_back(-0.55);
-    vertices.push_back(0.5);
-    vertices.push_back(0.3);
-
-    vertices.push_back(-0.8);
-    vertices.push_back(0.5);
-    vertices.push_back(0.3);
-
-    vertices.push_back(-0.8);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -161,6 +151,8 @@ int main() {
         ourShader.passColor3("COLOR", new float[] {0.0f, 0.0f, 1.0f});
         // render container
         glBindVertexArray(VAO);
+
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 8);
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, 8);
 
