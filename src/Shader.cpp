@@ -151,6 +151,11 @@ void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const {
                      &mat[0][0]);
 }
 
+void Shader::passColor3(const std::string &name, float value[]) const
+{
+    glUniform3f(glGetUniformLocation(ID, name.c_str()), value[0], value[1], value[2]);
+}
+
 // utility function for checking shader compilation/linking errors.
 // ------------------------------------------------------------------------
 void Shader::checkCompileErrors(unsigned int shader, std::string type) {
