@@ -82,6 +82,21 @@ int main() {
     vertices.push_back(-0.5);
     vertices.push_back(0.0);
 
+    vertices.push_back(-0.55);
+    vertices.push_back(-0.5);
+    vertices.push_back(0.3);
+
+    vertices.push_back(-0.55);
+    vertices.push_back(0.5);
+    vertices.push_back(0.3);
+
+    vertices.push_back(-0.8);
+    vertices.push_back(0.5);
+    vertices.push_back(0.3);
+
+    vertices.push_back(-0.8);
+    vertices.push_back(0.5);
+    vertices.push_back(0.0);
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -127,8 +142,8 @@ int main() {
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
         model = model =
-                glm::rotate(model, (float) glfwGetTime() * glm::radians(50.0f),
-                            glm::vec3(0.5f, 1.0f, 0.0f));
+                glm::rotate(model, (float) glfwGetTime() * glm::radians(22.5f),
+                            glm::vec3(0.0f, 1.0f, 0.0f));
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
         projection =
                 glm::perspective(glm::radians(45.0f),
@@ -147,7 +162,7 @@ int main() {
         // render container
         glBindVertexArray(VAO);
 
-        glDrawArrays(GL_TRIANGLES, 0, 4);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 8);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
         // etc.)
