@@ -93,7 +93,7 @@ int main() {
     float radiusSmall = 0.40;
     float radiusBig = 0.61;
     float angle = 0;
-    float angle_ofset =  2.0* M_PI / numberOfVertices;
+    float angle_ofset = 2.0* M_PI / numberOfVertices;
 
 //    for (int i = 0; i <= numberOfVertices ; i++) {
     //0
@@ -122,16 +122,16 @@ int main() {
         vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.3);
 
+    //6
+        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
+        vertices.push_back(sin(angle) * radiusSmall);
+        vertices.push_back(0.3);
 
     //7
         vertices.push_back(cos(angle+angle_ofset) * radiusSmall+0.8-radiusBig);
         vertices.push_back(sin(angle+angle_ofset) * radiusSmall);
         vertices.push_back(0.3);
-    //6
-        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusSmall);
-        vertices.push_back(0.3);
-//
+
 //        angle += 2.0* M_PI / numberOfVertices;
 //    }
 
