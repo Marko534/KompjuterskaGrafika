@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include <OpenGLPrj.hpp>
 
 #include <GLFW/glfw3.h>
