@@ -89,20 +89,51 @@ int main() {
     vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.0);
     vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
 
-    int numberOfVertices = 30;
+    int numberOfVertices = 10;
     float radiusSmall = 0.40;
     float radiusBig = 0.61;
     float angle = 0;
+    float angle_ofset =  2.0* M_PI / numberOfVertices;
 
-    for (int i = 0; i <= numberOfVertices ; i++) {
+//    for (int i = 0; i <= numberOfVertices ; i++) {
+    //0
+        vertices.push_back(cos(angle+angle_ofset) * radiusSmall+0.8-radiusBig);
+        vertices.push_back(sin(angle+angle_ofset) * radiusSmall);
+        vertices.push_back(0.0);
+    //1
         vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
         vertices.push_back(sin(angle) * radiusSmall);
         vertices.push_back(0.0);
+    //2
+        vertices.push_back(cos(angle+angle_ofset) * radiusBig+0.8-radiusBig);
+        vertices.push_back(sin(angle+angle_ofset) * radiusBig);
+        vertices.push_back(0.0);
+    //3
         vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
         vertices.push_back(sin(angle) * radiusBig);
         vertices.push_back(0.0);
-        angle += 2.0* M_PI / numberOfVertices;
-    }
+
+    //4
+        vertices.push_back(cos(angle+angle_ofset) * radiusBig+0.8-radiusBig);
+        vertices.push_back(sin(angle+angle_ofset) * radiusBig);
+        vertices.push_back(0.3);
+    //5
+        vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
+        vertices.push_back(sin(angle) * radiusBig);
+        vertices.push_back(0.3);
+
+
+    //7
+        vertices.push_back(cos(angle+angle_ofset) * radiusSmall+0.8-radiusBig);
+        vertices.push_back(sin(angle+angle_ofset) * radiusSmall);
+        vertices.push_back(0.3);
+    //6
+        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
+        vertices.push_back(sin(angle) * radiusSmall);
+        vertices.push_back(0.3);
+//
+//        angle += 2.0* M_PI / numberOfVertices;
+//    }
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -147,9 +178,12 @@ int main() {
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
+//        model = model =
+//                glm::rotate(model, (float) glfwGetTime() * glm::radians(22.5f),
+//                            glm::vec3(0.0f, 1.0f, 0.0f));
         model = model =
-                glm::rotate(model, (float) glfwGetTime() * glm::radians(22.5f),
-                            glm::vec3(0.0f, 1.0f, 0.0f));
+                glm::rotate(model, glm::radians(22.5f),
+                            glm::vec3(1.0f, 0.0f, 0.0f));
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
         projection =
                 glm::perspective(glm::radians(45.0f),
@@ -171,8 +205,16 @@ int main() {
         glDrawArrays(GL_TRIANGLE_FAN, 8, 8);
 
         ourShader.passColor3("COLOR", new float[] {0.165, 0.576, 0.82});
-        glDrawArrays(GL_TRIANGLE_STRIP, 16 ,2 * ( numberOfVertices + 1));
+        glDrawArrays(GL_TRIANGLE_STRIP, 16, 8);
 
+//        glDrawArrays(GL_TRIANGLE_STRIP, 16 ,2 * ( numberOfVertices + 1));
+//        float col_int = 1.0/numberOfVertices;
+//        float col = 0;
+//        for (int i =0; i < numberOfVertices;i++) {
+//            ourShader.passColor3("COLOR", new float[] {0.0, 1.0, col});
+//            col+=col_int;
+//            glDrawArrays(GL_TRIANGLE_STRIP, 16+i*7, 7);
+//        }
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
         // etc.)
         // -------------------------------------------------------------------------------
@@ -197,11 +239,19 @@ int main() {
 void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    //glfwSetWindowShouldClose(window, true);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
 // function executes
 // ---------------------------------------------------------------------------------------------
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     // make sure the viewport matches the new window dimensions; note that width
     // and height will be significantly larger than specified on retina displays.
