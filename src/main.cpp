@@ -89,24 +89,7 @@ int main() {
     vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.0);
     vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
 
-
-    vertices.push_back(-0.55);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.8);
-    vertices.push_back(0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.8);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.0);
-
-    vertices.push_back(-0.55);
-    vertices.push_back(-0.5);
-    vertices.push_back(0.0);
-
-    int numberOfVertices = 1000;
+    int numberOfVertices = 30;
     float radiusSmall = 0.40;
     float radiusBig = 0.61;
     float angle = 0;
@@ -188,7 +171,7 @@ int main() {
         glDrawArrays(GL_TRIANGLE_FAN, 8, 8);
 
         ourShader.passColor3("COLOR", new float[] {0.165, 0.576, 0.82});
-        glDrawArrays(GL_TRIANGLE_STRIP, 4,2 * ( numberOfVertices + 1));
+        glDrawArrays(GL_TRIANGLE_STRIP, 16 ,2 * ( numberOfVertices + 1));
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
         // etc.)
