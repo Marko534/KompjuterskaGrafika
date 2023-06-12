@@ -68,16 +68,13 @@ int main() {
 
     // clear memory of prev arrays
     std::vector<float>vertices;
-    std::vector<float>normals;
-    std::vector<float>texCoords;
 
     int sectorCount = 100;
     int stackCount = sectorCount;
+    int ignore = 0;
     float radius = 1;
 
     float x, y, z, xy;                              // vertex position
-    float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
-    float s, t;                                     // vertex texCoord
 
     float sectorStep = 2.0f * M_PI / sectorCount;
     float stackStep = M_PI / stackCount;
@@ -94,27 +91,18 @@ int main() {
         for(int j = 0; j <= sectorCount; ++j)
         {
             sectorAngle = j * sectorStep;           // starting from 0 to 2pi
-
+            if((sectorAngle > 9.0/5.0*M_PI || sectorAngle <M_PI/5.0) && stackAngle>-M_PI/2.0 && stackAngle < M_PI/2.0) {
+                vertices.push_back(0);
+                vertices.push_back(0);
+                vertices.push_back(0);
+                continue;
+            }
             // vertex position (x, y, z)
             x = xy * cos(sectorAngle);             // r * cos(u) * cos(v)
             y = xy * sin(sectorAngle);             // r * cos(u) * sin(v)
             vertices.push_back(x);
             vertices.push_back(y);
             vertices.push_back(z);
-
-            // normalized vertex normal (nx, ny, nz)
-            nx = x * lengthInv;
-            ny = y * lengthInv;
-            nz = z * lengthInv;
-            normals.push_back(nx);
-            normals.push_back(ny);
-            normals.push_back(nz);
-
-            // vertex tex coord (s, t) range between [0, 1]
-            s = (float)j / sectorCount;
-            t = (float)i / stackCount;
-            texCoords.push_back(s);
-            texCoords.push_back(t);
         }
     }
 
