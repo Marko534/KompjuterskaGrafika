@@ -75,10 +75,7 @@ int main() {
     int stackCount = sectorCount;
     float radius = 1;
 
-    float x, y, z, xy;                              // vertex position
-    float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
-    float s, t;                                     // vertex texCoord
-
+    float x, y, z, xy;
     float sectorStep = 2.0f * M_PI / sectorCount;
     float stackStep = M_PI / stackCount;
     float sectorAngle, stackAngle;
@@ -101,25 +98,10 @@ int main() {
             vertices.push_back(x);
             vertices.push_back(y);
             vertices.push_back(z);
-
-            // normalized vertex normal (nx, ny, nz)
-            nx = x * lengthInv;
-            ny = y * lengthInv;
-            nz = z * lengthInv;
-            normals.push_back(nx);
-            normals.push_back(ny);
-            normals.push_back(nz);
-
-            // vertex tex coord (s, t) range between [0, 1]
-            s = (float)j / sectorCount;
-            t = (float)i / stackCount;
-            texCoords.push_back(s);
-            texCoords.push_back(t);
         }
     }
 
     std::vector<int> indices;
-    std::vector<int> lineIndices;
     int k1, k2;
     for(int i = 0; i < stackCount; ++i)
     {
@@ -143,16 +125,6 @@ int main() {
                 indices.push_back(k1 + 1);
                 indices.push_back(k2);
                 indices.push_back(k2 + 1);
-            }
-
-            // store indices for lines
-            // vertical lines for all stacks, k1 => k2
-            lineIndices.push_back(k1);
-            lineIndices.push_back(k2);
-            if(i != 0)  // horizontal lines except 1st stack, k1 => k+1
-            {
-                lineIndices.push_back(k1);
-                lineIndices.push_back(k1 + 1);
             }
         }
     }
