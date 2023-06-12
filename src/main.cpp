@@ -66,82 +66,59 @@ int main() {
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
 
-    std::vector<float> vertices;
-    //RECTANGLE first bit
-    vertices.push_back(-0.55); vertices.push_back(0.5); vertices.push_back(0.0);
-    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.0);
-    vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
-    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.0);
+    // clear memory of prev arrays
+    std::vector<float>vertices;
+    std::vector<float>normals;
+    std::vector<float>texCoords;
 
-    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.3);
-    vertices.push_back(-0.55); vertices.push_back(0.5); vertices.push_back(0.3);
-    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.3);
-    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.0);
+    int sectorCount = 10;
+    int stackCount = sectorCount;
+    float radius = 1;
 
-    //RECTANGLE second bit
-    vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.3);
-    vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
-    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.0);
-    vertices.push_back(-0.8); vertices.push_back(0.5); vertices.push_back(0.3);
+    float x, y, z, xy;                              // vertex position
+    float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
+    float s, t;                                     // vertex texCoord
 
-    vertices.push_back(-0.55); vertices.push_back(0.5); vertices.push_back(0.3);
-    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.3);
-    vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.0);
-    vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
+    float sectorStep = 2.0f * M_PI / sectorCount;
+    float stackStep = M_PI / stackCount;
+    float sectorAngle, stackAngle;
 
-    int numberOfVertices = 1000;
-    float radiusSmall = 0.40;
-    float radiusBig = 0.61;
-    float angle = 0;
-    float angle_ofset = 2.0* M_PI / numberOfVertices;
+    for(int i = 0; i <= stackCount; ++i)
+    {
+        stackAngle = M_PI / 2.0 - i * stackStep;        // starting from pi/2 to -pi/2
+        xy = radius * cos(stackAngle);             // r * cos(u)
+        z = radius * sin(stackAngle);              // r * sin(u)
 
-    for (int i = 0; i <= numberOfVertices ; i++) {
-    //7
-        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusSmall);
-        vertices.push_back(0.3);
-    //6
-        vertices.push_back(cos(angle+angle_ofset) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle+angle_ofset) * radiusSmall);
-        vertices.push_back(0.3);
-    //5
-        vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusBig);
-        vertices.push_back(0.3);
+        // add (sectorCount+1) vertices per stack
+        // first and last vertices have same position and normal, but different tex coords
+        for(int j = 0; j <= sectorCount; ++j)
+        {
+            sectorAngle = j * sectorStep;           // starting from 0 to 2pi
 
-    //4
-        vertices.push_back(cos(angle+angle_ofset) * radiusBig+0.8-radiusBig);
-        vertices.push_back(sin(angle+angle_ofset) * radiusBig);
-        vertices.push_back(0.3);
+            // vertex position (x, y, z)
+            x = xy * cos(sectorAngle);             // r * cos(u) * cos(v)
+            y = xy * sin(sectorAngle);             // r * cos(u) * sin(v)
+            vertices.push_back(x);
+            vertices.push_back(y);
+            vertices.push_back(z);
 
-    //3
-        vertices.push_back(cos(angle) * radiusBig +0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusBig);
-        vertices.push_back(0.0);
+            // normalized vertex normal (nx, ny, nz)
+            nx = x * lengthInv;
+            ny = y * lengthInv;
+            nz = z * lengthInv;
+            normals.push_back(nx);
+            normals.push_back(ny);
+            normals.push_back(nz);
 
-    //2
-        vertices.push_back(cos(angle+angle_ofset) * radiusBig+0.8-radiusBig);
-        vertices.push_back(sin(angle+angle_ofset) * radiusBig);
-        vertices.push_back(0.0);
-    //1
-        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusSmall);
-        vertices.push_back(0.0);
-    //0
-        vertices.push_back(cos(angle+angle_ofset) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle+angle_ofset) * radiusSmall);
-        vertices.push_back(0.0);
-
-    //-1
-        vertices.push_back(cos(angle) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle) * radiusSmall);
-        vertices.push_back(0.3);
-        //-2
-        vertices.push_back(cos(angle+angle_ofset) * radiusSmall+0.8-radiusBig);
-        vertices.push_back(sin(angle+angle_ofset) * radiusSmall);
-        vertices.push_back(0.3);
-        angle += 2.0* M_PI / numberOfVertices;
+            // vertex tex coord (s, t) range between [0, 1]
+            s = (float)j / sectorCount;
+            t = (float)i / stackCount;
+            texCoords.push_back(s);
+            texCoords.push_back(t);
+        }
     }
+
+
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -208,20 +185,11 @@ int main() {
         ourShader.setMat4("projection", projection);
         // render container
         glBindVertexArray(VAO);
-        ourShader.passColor3("COLOR", new float[] {0.192,0.192,0.514});
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 8);
-        glDrawArrays(GL_TRIANGLE_FAN, 8, 8);
+
 
         ourShader.passColor3("COLOR", new float[] {0.165, 0.576, 0.82});
-//        glDrawArrays(GL_TRIANGLE_STRIP, 16, 10);
-//
-//        float col_int = 1.0/numberOfVertices;
-//        float col = 0;
-        for (int i =0; i < numberOfVertices;i++) {
-//            ourShader.passColor3("COLOR", new float[] {0.0, 1.0, col});
-//            col+=col_int;
-            glDrawArrays(GL_TRIANGLE_STRIP, 16+i*10, 10);
-        }
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size());
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
         // etc.)
         // -------------------------------------------------------------------------------
