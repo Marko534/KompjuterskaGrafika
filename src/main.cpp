@@ -89,7 +89,7 @@ int main() {
     vertices.push_back(-0.55); vertices.push_back(-0.5); vertices.push_back(0.0);
     vertices.push_back(-0.8); vertices.push_back(-0.5); vertices.push_back(0.0);
 
-    int numberOfVertices = 1000;
+    int numberOfVertices = 100;
     float radiusSmall = 0.40;
     float radiusBig = 0.61;
     float angle = 0;
