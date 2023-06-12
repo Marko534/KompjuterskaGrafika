@@ -71,7 +71,7 @@ int main() {
     std::vector<float>normals;
     std::vector<float>texCoords;
 
-    int sectorCount = 10;
+    int sectorCount = 100;
     int stackCount = sectorCount;
     float radius = 1;
 
@@ -230,7 +230,7 @@ int main() {
         glBindVertexArray(VAO);
 
 
-        ourShader.passColor3("COLOR", new float[] {0.165, 0.576, 0.82});
+        ourShader.passColor3("COLOR", new float[] {1.0,1.0,0.0});
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
         // etc.)
