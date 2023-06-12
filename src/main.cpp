@@ -71,7 +71,7 @@ int main() {
     std::vector<float>normals;
     std::vector<float>texCoords;
 
-    int sectorCount = 10;
+    int sectorCount = 100;
     int stackCount = sectorCount;
     float radius = 1;
 
