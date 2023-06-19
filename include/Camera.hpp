@@ -10,17 +10,17 @@
 // Defines several possible options for camera movement. Used as abstraction to
 // stay away from window-system specific input methods
 enum Camera_Movement {
-    FORWARD, BACKWARD, LEFT, RIGHT, JUMP, FALL
+    FORWARD, BACKWARD, LEFT, RIGHT, JUMP, CROUCH, PRONE
 };
 
 // Default camera values
 const float YAW = -90.0f;
 const float PITCH = 0.0f;
-const float SPEED = 1.0f;
+const float SPEED = 5.0f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 45.0f;
 // Default FPS
-const float JUMPVELOCITY = 5.0f;
+const float JUMPVELOCITY = 1.0f;
 const float STANDHEIGHT = 1.0f;
 const float CROUCHHEIGHT = 0.5f;
 const float PRONEHEIGHT = 0.1f;
