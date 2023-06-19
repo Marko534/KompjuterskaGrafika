@@ -291,9 +291,10 @@ void processInput(GLFWwindow *window) {
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         camera.ProcessKeyboard(JUMP, deltaTime);
-    }
-    else if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
+    }else if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
         camera.ProcessKeyboard(CROUCH, deltaTime);
+    }else if (glfwGetKey(window, GLFW_KEY_C) == GLFW_RELEASE) {
+        camera.ProcessKeyboard(STAND, deltaTime);
     }
 }
 
