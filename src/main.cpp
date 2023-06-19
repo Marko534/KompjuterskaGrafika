@@ -130,10 +130,10 @@ int main() {
             -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
 
             //FLOOR
-            -10.0f, 0.0f, -10.0f, 0.0f, 0.0f,
-            10.0f, 0.0f, -10.0f, 0.0f, 0.0f,
-            -10.0f, 0.0f, 10.0f, 0.0f, 0.0f,
-            10.0f, 0.0f, 10.0f, 0.0f, 0.0f,
+            -100.0f, 0.0f, -100.0f, 0.0f, 0.0f,
+            100.0f, 0.0f, -100.0f, 0.0f, 0.0f,
+            -100.0f, 0.0f, 100.0f, 0.0f, 0.0f,
+            100.0f, 0.0f, 100.0f, 0.0f, 0.0f,
 
     };
 
@@ -265,6 +265,7 @@ int main() {
 
         // render boxes
         glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLE_STRIP, 36, 4);
         for (unsigned int i = 0; i < 10; i++) {
             // calculate the model matrix for each object and pass it to shader before
             // drawing
@@ -279,7 +280,6 @@ int main() {
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        glDrawArrays(GL_TRIANGLES, 36, 4);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
         // etc.)
         // -------------------------------------------------------------------------------
