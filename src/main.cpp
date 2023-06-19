@@ -265,6 +265,13 @@ int main() {
 
         // render boxes
         glBindVertexArray(VAO);
+
+        glm::mat4 model = glm::mat4(
+                1.0f); // make sure to initialize matrix to identity matrix first
+        model = glm::translate(model, cubePositions[0]);
+        ourShader.setMat4("model", model);
+
+
         glDrawArrays(GL_TRIANGLE_STRIP, 36, 4);
         for (unsigned int i = 0; i < 10; i++) {
             // calculate the model matrix for each object and pass it to shader before
