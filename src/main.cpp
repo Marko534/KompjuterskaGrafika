@@ -258,7 +258,10 @@ int main() {
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
-        printf("x: %f \t y: %f \t z: %f \n", camera.Position.x, camera.Position.y, camera.Position.z);
+        camera.physics(deltaTime);
+
+
+//        printf("x: %f \t y: %f \t z: %f \n", camera.Position.x, camera.Position.y, camera.Position.z);
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
@@ -286,10 +289,11 @@ void processInput(GLFWwindow *window) {
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         camera.ProcessKeyboard(JUMP, deltaTime);
     }
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) {
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) {
         camera.ProcessKeyboard(FALL, deltaTime);
     }
 }

@@ -1,4 +1,5 @@
 #include <Camera.hpp>
+#include <iostream>
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED),
@@ -7,6 +8,9 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
   WorldUp = up;
   Yaw = yaw;
   Pitch = pitch;
+  Jump = 0;
+  Posture = 1;
+  AirTime = 0;
   updateCameraVectors();
 }
 // Constructor with scalar values
@@ -39,14 +43,14 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime) {
     Position -= Right * velocity;
   if (direction == RIGHT)
     Position += Right * velocity;
-  if (direction == JUMP)
-      if(Position.y < 1) {
-          Position += Up * MovementSpeed * velocity;
-      } //* 3.0f;
-    if (direction == FALL)
-        if(Position.y>0 ) {
-            Position -= Up * MovementSpeed * velocity;
-        }
+  if (direction == JUMP){
+      if(Jump == 0) {
+          Jump = 1;
+      }
+  }
+//      if(Position.y>0 ) {
+//          Position -= Up * MovementSpeed * velocity;
+//      }
 }
 
 // Processes input received from a mouse input system. Expects the offset
@@ -69,6 +73,30 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset,
 
   // Update Front, Right and Up Vectors using the updated Euler angles
   updateCameraVectors();
+}
+
+void Camera::physics(float deltaTime) {
+    printf("x: %f \t y: %f \t z: %f \n", Up.x, Up.y, Up.z);
+    if (Jump == 0){
+        AirTime = 0;
+    }else if (Jump == 1){
+        float velocity = JUMPVELOCITY - GRAVITI * AirTime;
+        Position.y += MovementSpeed * velocity;
+        AirTime += deltaTime;
+        if (velocity <= 0){
+            Jump = -1;
+            AirTime = 0;
+        }
+    }else if (Jump == -1){
+        float velocity = GRAVITI * AirTime;
+        Position.y -= MovementSpeed * velocity;
+        AirTime += deltaTime;
+        if (Position.y <= STANDHEIGHT){
+            Position.y = STANDHEIGHT;
+            Jump = 0;
+            Posture = 1;
+        }
+    }
 }
 
 // Processes input received from a mouse scroll-wheel event. Only requires
