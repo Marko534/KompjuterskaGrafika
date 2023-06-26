@@ -36,7 +36,7 @@ glm::mat4 Camera::GetViewMatrix() {
 // systems)
 void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime) {
     float velocity = MovementSpeed * deltaTime;
-    if(Posture == 0) {
+    if (Posture == 0) {
         velocity /= 2.0f;
     }
 
@@ -62,8 +62,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime) {
             Posture = 2;
         }
     }
-    if (direction == STAND){
-        if (Posture == 0){
+    if (direction == STAND) {
+        if (Posture == 0) {
             Posture = 1;
         }
     }
@@ -71,91 +71,91 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime) {
 
 // Processes input received from a mouse input system. Expects the offset
 // value in both the x and y direction.
-    void Camera::ProcessMouseMovement(float xoffset, float yoffset,
-                                      GLboolean constrainPitch) {
-        xoffset *= MouseSensitivity;
-        yoffset *= MouseSensitivity;
+void Camera::ProcessMouseMovement(float xoffset, float yoffset,
+                                  GLboolean constrainPitch) {
+    xoffset *= MouseSensitivity;
+    yoffset *= MouseSensitivity;
 
-        Yaw += xoffset;
-        Pitch += yoffset;
+    Yaw += xoffset;
+    Pitch += yoffset;
 
-        // Make sure that when pitch is out of bounds, screen doesn't get flipped
-        if (constrainPitch) {
-            if (Pitch > 89.0f)
-                Pitch = 89.0f;
-            if (Pitch < -89.0f)
-                Pitch = -89.0f;
-        }
-
-        // Update Front, Right and Up Vectors using the updated Euler angles
-        updateCameraVectors();
+    // Make sure that when pitch is out of bounds, screen doesn't get flipped
+    if (constrainPitch) {
+        if (Pitch > 89.0f)
+            Pitch = 89.0f;
+        if (Pitch < -89.0f)
+            Pitch = -89.0f;
     }
 
-    void Camera::physics(float deltaTime) {
+    // Update Front, Right and Up Vectors using the updated Euler angles
+    updateCameraVectors();
+}
+
+void Camera::physics(float deltaTime) {
 //    printf("x: %f \t y: %f \t z: %f \n", Up.x, Up.y, Up.z);
-        if (Jump == 0) {
+    if (Jump == 0) {
+        AirTime = 0;
+    } else if (Jump == 1) {
+        float velocity = JUMPVELOCITY - GRAVITI * AirTime;
+        Position.y += velocity;
+        AirTime += deltaTime;
+        if (velocity <= 0) {
+            Jump = -1;
             AirTime = 0;
-        } else if (Jump == 1) {
-            float velocity = JUMPVELOCITY - GRAVITI * AirTime;
-            Position.y += velocity;
-            AirTime += deltaTime;
-            if (velocity <= 0) {
-                Jump = -1;
-                AirTime = 0;
-            }
-        } else if (Jump == -1) {
-            float velocity = GRAVITI * AirTime;
-            Position.y -= velocity;
-            AirTime += deltaTime;
-            if (Position.y <= STANDHEIGHT) {
-                Position.y = STANDHEIGHT;
-                Jump = 0;
-                Posture = 1;
-            }
         }
-
-        float velocity = MovementSpeed * deltaTime;
-        if (Posture == 2) {
-            Position.y -= velocity;
-            if (Position.y <= CROUCHHEIGHT) {
-                Position.y = CROUCHHEIGHT;
-                Posture = 0;
-            }
-        } else if (Posture == 1) {
-            Position.y += velocity;
-            if (Position.y >= STANDHEIGHT) {
-                Position.y = STANDHEIGHT;
-                Posture = 3;
-            }
+    } else if (Jump == -1) {
+        float velocity = GRAVITI * AirTime;
+        Position.y -= velocity;
+        AirTime += deltaTime;
+        if (Position.y <= STANDHEIGHT) {
+            Position.y = STANDHEIGHT;
+            Jump = 0;
+            Posture = 1;
         }
-
     }
+
+    float velocity = MovementSpeed * deltaTime;
+    if (Posture == 2) {
+        Position.y -= velocity;
+        if (Position.y <= CROUCHHEIGHT) {
+            Position.y = CROUCHHEIGHT;
+            Posture = 0;
+        }
+    } else if (Posture == 1) {
+        Position.y += velocity;
+        if (Position.y >= STANDHEIGHT) {
+            Position.y = STANDHEIGHT;
+            Posture = 3;
+        }
+    }
+
+}
 
 // Processes input received from a mouse scroll-wheel event. Only requires
 // input on the vertical wheel-axis
-    void Camera::ProcessMouseScroll(float yoffset) {
-        if (Zoom >= 1.0f && Zoom <= 45.0f)
-            Zoom -= yoffset;
-        if (Zoom <= 1.0f)
-            Zoom = 1.0f;
-        if (Zoom >= 45.0f)
-            Zoom = 45.0f;
-    }
+void Camera::ProcessMouseScroll(float yoffset) {
+    if (Zoom >= 1.0f && Zoom <= 45.0f)
+        Zoom -= yoffset;
+    if (Zoom <= 1.0f)
+        Zoom = 1.0f;
+    if (Zoom >= 45.0f)
+        Zoom = 45.0f;
+}
 
 // Calculates the front vector from the Camera's (updated) Euler Angles
-    void Camera::updateCameraVectors() {
-        // Calculate the new Front vector
-        glm::vec3 front;
-        front.x = static_cast<float>(cos(glm::radians(static_cast<double>(Yaw))) *
-                                     cos(glm::radians(static_cast<double>(Pitch))));
-        front.y = static_cast<float>(sin(glm::radians(static_cast<double>(Pitch))));
-        front.z = static_cast<float>(sin(glm::radians(static_cast<double>(Yaw))) *
-                                     cos(glm::radians(static_cast<double>(Pitch))));
-        Front = glm::normalize(front);
-        // Also re-calculate the Right and Up vector
-        Right = glm::normalize(glm::cross(
-                Front, WorldUp)); // Normalize the vectors, because their length gets
-        // closer to 0 the more you look up or down which
-        // results in slower movement.
-        Up = glm::normalize(glm::cross(Right, Front));
-    }
+void Camera::updateCameraVectors() {
+    // Calculate the new Front vector
+    glm::vec3 front;
+    front.x = static_cast<float>(cos(glm::radians(static_cast<double>(Yaw))) *
+                                 cos(glm::radians(static_cast<double>(Pitch))));
+    front.y = static_cast<float>(sin(glm::radians(static_cast<double>(Pitch))));
+    front.z = static_cast<float>(sin(glm::radians(static_cast<double>(Yaw))) *
+                                 cos(glm::radians(static_cast<double>(Pitch))));
+    Front = glm::normalize(front);
+    // Also re-calculate the Right and Up vector
+    Right = glm::normalize(glm::cross(
+            Front, WorldUp)); // Normalize the vectors, because their length gets
+    // closer to 0 the more you look up or down which
+    // results in slower movement.
+    Up = glm::normalize(glm::cross(Right, Front));
+}
