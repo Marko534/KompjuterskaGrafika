@@ -20,11 +20,11 @@ const float SPEED = 5.0f;
 const float SENSITIVITY = 0.1f;
 const float ZOOM = 85.0f;
 // Default FPS
-const float JUMPVELOCITY = 0.05f;
+const float JUMPVELOCITY = 0.10f;
 const float STANDHEIGHT = 1.0f;
 const float CROUCHHEIGHT = 0.5f;
 const float PRONEHEIGHT = 0.1f;
-const float GRAVITI = 9.81f / 40.0;
+const float GRAVITI = 9.81f / 20.0;
 
 // An abstract camera class that processes input and calculates the
 // corresponding Euler Angles, Vectors and Matrices for use in OpenGL
